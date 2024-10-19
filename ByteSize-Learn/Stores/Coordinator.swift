@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// Make Course conform to Identifiable if needed
 extension Course {
     var id: String { name }
 }
