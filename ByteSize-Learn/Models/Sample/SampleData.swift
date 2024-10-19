@@ -25,22 +25,26 @@ struct SampleData {
                     "Networking",
                     "Data Persistence",
                     "Machine Learning"
-                ], correctIndex: 0)
+                ], correctIndex: 0),
+                explanation: "SwiftUI is primarily used for building user interfaces across all Apple platforms."
             ),
             CardModel(
                 title: "Declarative UI",
                 description: "SwiftUI uses a declarative syntax.",
-                type: .trueFalse(correctAnswer: true)
+                type: .trueFalse(correctAnswer: true),
+                explanation: "Declarative syntax allows you to state what your UI should do."
             ),
             CardModel(
                 title: "SwiftUI Views",
                 description: "Create a view in SwiftUI by using the ______ protocol.",
-                type: .shortAnswer(correctAnswer: "View")
+                type: .shortAnswer(correctAnswer: "View"),
+                explanation: "The 'View' protocol is used to create views in SwiftUI."
             ),
             CardModel(
                 title: "Simple Counter",
                 description: "Write a simple SwiftUI view that increments a counter when a button is pressed.",
-                type: .longAnswer(correctAnswer: "Counter")
+                type: .longAnswer(correctAnswer: "Counter"),
+                explanation: "A simple counter view would have a @State variable 'counter' that increments on button press."
             )
         ]
     )

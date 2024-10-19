@@ -9,13 +9,14 @@ import SwiftUI
 
 struct CardView: View {
     let card: CardModel
-    
+    let onAnswer: (Bool, String?) -> Void // Closure to notify answer result
+
     // State variables for user interactions
     @State private var selectedOption: Int? = nil
     @State private var userAnswer: String = ""
     @State private var showFeedback: Bool = false
     @State private var isCorrect: Bool = false
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             // Card Title
@@ -63,6 +64,11 @@ struct CardView: View {
                 showFeedback: $showFeedback,
                 isCorrect: $isCorrect
             )
+            .onChange(of: showFeedback) { newValue in
+                if newValue {
+                    onAnswer(isCorrect, card.explanation)
+                }
+            }
         
         case .trueFalse(let correctAnswer):
             TrueFalseView(
@@ -71,6 +77,11 @@ struct CardView: View {
                 showFeedback: $showFeedback,
                 isCorrect: $isCorrect
             )
+            .onChange(of: showFeedback) { newValue in
+                if newValue {
+                    onAnswer(isCorrect, card.explanation)
+                }
+            }
         
         case .shortAnswer(let correctAnswer):
             ShortAnswerView(
@@ -79,6 +90,11 @@ struct CardView: View {
                 showFeedback: $showFeedback,
                 isCorrect: $isCorrect
             )
+            .onChange(of: showFeedback) { newValue in
+                if newValue {
+                    onAnswer(isCorrect, card.explanation)
+                }
+            }
         
         case .longAnswer(let correctAnswer):
             LongAnswerView(
@@ -87,15 +103,20 @@ struct CardView: View {
                 showFeedback: $showFeedback,
                 isCorrect: $isCorrect
             )
-        }
-        
-        // Feedback
-        if showFeedback {
-            Text(isCorrect ? "Correct ✅" : "Incorrect ❌")
-                .font(.headline)
-                .foregroundColor(isCorrect ? .green : .red)
-                .padding(.top, 10)
+            .onChange(of: showFeedback) { newValue in
+                if newValue {
+                    onAnswer(isCorrect, card.explanation)
+                }
+            }
         }
     }
 }
+
+//struct CardView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let sampleCard = SampleData.sampleCourse.cards[1]
+//        CardView(card: sampleCard, onAnswer: { _, _ in })
+//            .frame(width: 300, height: 500)
+//    }
+//}
 

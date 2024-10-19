@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LongAnswerView: View {
-    let correctAnswer: String // This could be the expected code or a description
+    let correctAnswer: String // Expected code or description
     
     @Binding var userAnswer: String
     @Binding var showFeedback: Bool
@@ -25,27 +25,23 @@ struct LongAnswerView: View {
                 .background(Color.white)
                 .cornerRadius(8)
             
-            HStack {
-                Button(action: {
-                    runCode()
-                }) {
-                    Text("Run Code")
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                }
-                .disabled(userAnswer.isEmpty)
+            Button(action: {
+                runCode()
+            }) {
+                Text("Run Code")
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.blue) // Updated color
+                    .cornerRadius(10)
             }
+            .disabled(userAnswer.isEmpty)
         }
     }
     
     private func runCode() {
         // Placeholder for API call to run code
-        // For now, simulate a correct or incorrect response
-        
-        // Simple simulation: Check if userAnswer contains the correctAnswer substring
+        // Simulate correctness based on whether userAnswer contains the correctAnswer substring
         if userAnswer.contains(correctAnswer) {
             isCorrect = true
         } else {
@@ -54,4 +50,3 @@ struct LongAnswerView: View {
         showFeedback = true
     }
 }
-

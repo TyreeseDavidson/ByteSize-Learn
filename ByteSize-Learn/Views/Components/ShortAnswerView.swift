@@ -27,7 +27,7 @@ struct ShortAnswerView: View {
                     .foregroundColor(.white)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(Color.green)
+                    .background(Color.blue)
                     .cornerRadius(10)
             }
             .disabled(userAnswer.isEmpty)
