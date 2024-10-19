@@ -18,6 +18,10 @@
 		2DA10A212CC41A04007BE130 /* UserAuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A202CC41A04007BE130 /* UserAuthModel.swift */; };
 		2DA10A242CC41ADC007BE130 /* UIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A232CC41ADC007BE130 /* UIElements.swift */; };
 		2DA10A272CC41B18007BE130 /* CoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A262CC41B18007BE130 /* CoordinatorView.swift */; };
+		2DA10A292CC41C25007BE130 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A282CC41C25007BE130 /* AboutView.swift */; };
+		2DA10A2B2CC41C4A007BE130 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A2A2CC41C4A007BE130 /* AccountView.swift */; };
+		2DA10A2D2CC41C60007BE130 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A2C2CC41C60007BE130 /* LoginView.swift */; };
+		2DA10A2F2CC41C8D007BE130 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A2E2CC41C8D007BE130 /* OnboardingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +56,10 @@
 		2DA10A202CC41A04007BE130 /* UserAuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthModel.swift; sourceTree = "<group>"; };
 		2DA10A232CC41ADC007BE130 /* UIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIElements.swift; sourceTree = "<group>"; };
 		2DA10A262CC41B18007BE130 /* CoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorView.swift; sourceTree = "<group>"; };
+		2DA10A282CC41C25007BE130 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		2DA10A2A2CC41C4A007BE130 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		2DA10A2C2CC41C60007BE130 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		2DA10A2E2CC41C8D007BE130 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +167,10 @@
 			isa = PBXGroup;
 			children = (
 				2D8B1EF02CC417C8001C30D5 /* ContentView.swift */,
+				2DA10A282CC41C25007BE130 /* AboutView.swift */,
+				2DA10A2A2CC41C4A007BE130 /* AccountView.swift */,
+				2DA10A2C2CC41C60007BE130 /* LoginView.swift */,
+				2DA10A2E2CC41C8D007BE130 /* OnboardingView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -310,8 +322,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DA10A212CC41A04007BE130 /* UserAuthModel.swift in Sources */,
+				2DA10A292CC41C25007BE130 /* AboutView.swift in Sources */,
 				2DA10A272CC41B18007BE130 /* CoordinatorView.swift in Sources */,
+				2DA10A2F2CC41C8D007BE130 /* OnboardingView.swift in Sources */,
+				2DA10A2D2CC41C60007BE130 /* LoginView.swift in Sources */,
 				2D8B1EF12CC417C8001C30D5 /* ContentView.swift in Sources */,
+				2DA10A2B2CC41C4A007BE130 /* AccountView.swift in Sources */,
 				2D8B1EEF2CC417C8001C30D5 /* ByteSize_LearnApp.swift in Sources */,
 				2DA10A1F2CC419A7007BE130 /* Coordinator.swift in Sources */,
 				2DA10A242CC41ADC007BE130 /* UIElements.swift in Sources */,
