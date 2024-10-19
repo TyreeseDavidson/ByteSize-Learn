@@ -16,6 +16,8 @@
 		2D8B1F0C2CC417C9001C30D5 /* ByteSize_LearnUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B1F0B2CC417C9001C30D5 /* ByteSize_LearnUITestsLaunchTests.swift */; };
 		2DA10A1F2CC419A7007BE130 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A1E2CC419A7007BE130 /* Coordinator.swift */; };
 		2DA10A212CC41A04007BE130 /* UserAuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A202CC41A04007BE130 /* UserAuthModel.swift */; };
+		2DA10A242CC41ADC007BE130 /* UIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A232CC41ADC007BE130 /* UIElements.swift */; };
+		2DA10A272CC41B18007BE130 /* CoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A262CC41B18007BE130 /* CoordinatorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		2D8B1F0B2CC417C9001C30D5 /* ByteSize_LearnUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteSize_LearnUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		2DA10A1E2CC419A7007BE130 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		2DA10A202CC41A04007BE130 /* UserAuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthModel.swift; sourceTree = "<group>"; };
+		2DA10A232CC41ADC007BE130 /* UIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIElements.swift; sourceTree = "<group>"; };
+		2DA10A262CC41B18007BE130 /* CoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +139,8 @@
 		2DA10A1B2CC41947007BE130 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2DA10A252CC41B05007BE130 /* Navigation */,
+				2DA10A222CC41AD1007BE130 /* Shared */,
 				2DA10A1D2CC41978007BE130 /* Screens */,
 			);
 			path = Views;
@@ -155,6 +161,22 @@
 				2D8B1EF02CC417C8001C30D5 /* ContentView.swift */,
 			);
 			path = Screens;
+			sourceTree = "<group>";
+		};
+		2DA10A222CC41AD1007BE130 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				2DA10A232CC41ADC007BE130 /* UIElements.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		2DA10A252CC41B05007BE130 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				2DA10A262CC41B18007BE130 /* CoordinatorView.swift */,
+			);
+			path = Navigation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -288,9 +310,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DA10A212CC41A04007BE130 /* UserAuthModel.swift in Sources */,
+				2DA10A272CC41B18007BE130 /* CoordinatorView.swift in Sources */,
 				2D8B1EF12CC417C8001C30D5 /* ContentView.swift in Sources */,
 				2D8B1EEF2CC417C8001C30D5 /* ByteSize_LearnApp.swift in Sources */,
 				2DA10A1F2CC419A7007BE130 /* Coordinator.swift in Sources */,
+				2DA10A242CC41ADC007BE130 /* UIElements.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

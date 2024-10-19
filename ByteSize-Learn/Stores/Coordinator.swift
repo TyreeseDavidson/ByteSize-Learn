@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum Page: String, Identifiable {
-    case Login, Onboarding, Home, Food, CreateReview, Settings, Account, About, PrivacyAndTerms
+    case Login, Onboarding, Home, Settings, Account, About, PrivacyAndTerms
     
     var id: String {
         self.rawValue
