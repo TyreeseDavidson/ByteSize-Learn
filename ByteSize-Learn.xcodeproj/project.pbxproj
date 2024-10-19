@@ -14,6 +14,7 @@
 		2D8B1F002CC417C9001C30D5 /* ByteSize_LearnTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B1EFF2CC417C9001C30D5 /* ByteSize_LearnTests.swift */; };
 		2D8B1F0A2CC417C9001C30D5 /* ByteSize_LearnUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B1F092CC417C9001C30D5 /* ByteSize_LearnUITests.swift */; };
 		2D8B1F0C2CC417C9001C30D5 /* ByteSize_LearnUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B1F0B2CC417C9001C30D5 /* ByteSize_LearnUITestsLaunchTests.swift */; };
+		2DA10A1F2CC419A7007BE130 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A1E2CC419A7007BE130 /* Coordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		2D8B1F052CC417C9001C30D5 /* ByteSize-LearnUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ByteSize-LearnUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D8B1F092CC417C9001C30D5 /* ByteSize_LearnUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteSize_LearnUITests.swift; sourceTree = "<group>"; };
 		2D8B1F0B2CC417C9001C30D5 /* ByteSize_LearnUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteSize_LearnUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2DA10A1E2CC419A7007BE130 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,8 +96,9 @@
 		2D8B1EED2CC417C8001C30D5 /* ByteSize-Learn */ = {
 			isa = PBXGroup;
 			children = (
+				2DA10A1C2CC4195F007BE130 /* Stores */,
+				2DA10A1B2CC41947007BE130 /* Views */,
 				2D8B1EEE2CC417C8001C30D5 /* ByteSize_LearnApp.swift */,
-				2D8B1EF02CC417C8001C30D5 /* ContentView.swift */,
 				2D8B1EF22CC417C9001C30D5 /* Assets.xcassets */,
 				2D8B1EF42CC417C9001C30D5 /* Preview Content */,
 			);
@@ -125,6 +128,30 @@
 				2D8B1F0B2CC417C9001C30D5 /* ByteSize_LearnUITestsLaunchTests.swift */,
 			);
 			path = "ByteSize-LearnUITests";
+			sourceTree = "<group>";
+		};
+		2DA10A1B2CC41947007BE130 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2DA10A1D2CC41978007BE130 /* Screens */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2DA10A1C2CC4195F007BE130 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				2DA10A1E2CC419A7007BE130 /* Coordinator.swift */,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
+		2DA10A1D2CC41978007BE130 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				2D8B1EF02CC417C8001C30D5 /* ContentView.swift */,
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,6 +286,7 @@
 			files = (
 				2D8B1EF12CC417C8001C30D5 /* ContentView.swift in Sources */,
 				2D8B1EEF2CC417C8001C30D5 /* ByteSize_LearnApp.swift in Sources */,
+				2DA10A1F2CC419A7007BE130 /* Coordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
