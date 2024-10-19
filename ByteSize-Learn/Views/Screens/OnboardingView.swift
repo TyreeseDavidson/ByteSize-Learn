@@ -17,7 +17,6 @@ struct OnboardingView: View {
     //     Else pop to home
     
     @EnvironmentObject private var coordinator: Coordinator
-    @EnvironmentObject private var userAuth: UserAuthModel
     
     var body: some View {
         VStack{

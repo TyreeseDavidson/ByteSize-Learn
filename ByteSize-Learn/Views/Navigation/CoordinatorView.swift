@@ -11,7 +11,6 @@ struct CoordinatorView: View {
     // No need to edit this
     
     @StateObject private var coordinator = Coordinator()
-    @StateObject private var userAuth: UserAuthModel =  UserAuthModel()
     
     
     var body: some View {
@@ -28,16 +27,7 @@ struct CoordinatorView: View {
                 }
         }
         .environmentObject(coordinator)
-        .environmentObject(userAuth)
-        .onChange(of: userAuth.isLoggedIn) {
-            if !userAuth.isLoggedIn {
-                print("Not Logged In")
-                coordinator.push(.Login)
-            } else {
-                print("Logged In")
-                coordinator.push(.Onboarding)
-            }
-        }
+        
         /*.onChange(of: userAuth.newUser) {
             print(userAuth.newUser)
             print("Empty: ")

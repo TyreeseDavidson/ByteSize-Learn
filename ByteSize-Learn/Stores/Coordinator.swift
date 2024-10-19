@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum Page: String, Identifiable {
-    case Login, Onboarding, Home, Settings, Account, About
+    case Onboarding, Home, Settings, About
     
     var id: String {
         self.rawValue
@@ -68,16 +68,12 @@ class Coordinator: ObservableObject {
     @ViewBuilder
     func build(page: Page) -> some View {
         switch page {
-        case .Login:
-            LoginView()
         case .Onboarding:
             OnboardingView()
         case .Home:
             HomePageView()
         case .Settings:
             SettingsView()
-        case .Account:
-            AccountView()
         case .About:
             AboutView()
             
@@ -92,7 +88,7 @@ class Coordinator: ObservableObject {
             
             // Wrap in a navigation stack if you want to see the navigation title
             NavigationStack {
-                ExampleSheetView()
+                //ExampleSheetView()
             }
         }
     }
@@ -105,7 +101,7 @@ class Coordinator: ObservableObject {
             
             // Wrap in a navigation stack if you want to see the navigation title
             NavigationStack {
-                ExmpleFullScreenView()
+                //ExmpleFullScreenView()
             }
         }
     }

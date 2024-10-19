@@ -10,7 +10,6 @@ import SwiftUI
 struct HomePageView: View {
     
     @EnvironmentObject private var coordinator: Coordinator
-    @EnvironmentObject private var userAuth: UserAuthModel
     @State private var showDropdown = false
     
     
@@ -22,10 +21,6 @@ struct HomePageView: View {
                                 .font(.headline)
                                 .padding(.bottom, 10)
                             
-                            Button("Push Login Page") {
-                                coordinator.push(.Login)
-                            }
-                            .padding(.bottom, 10)
                             
 //                            Button("Present Example Sheet") {
 //                                coordinator.present(sheet: .ExampleSheet)
@@ -69,17 +64,9 @@ struct HomePageView: View {
                     
                     if showDropdown {
                         // Dropdown buttons
-                        DropdownButton(title: "Account", url:  userAuth.profilePicUrl) {
-                            showDropdown.toggle()
-                            coordinator.push(.Account)
-                        }
                         DropdownButton(title: "About", icon: "questionmark.circle.fill") {
                             showDropdown.toggle()
                             coordinator.push(.About)
-                        }
-                        DropdownButton(title: "Privacy & Terms", icon: "lock.shield.fill") {
-                            showDropdown.toggle()
-                            coordinator.push(.PrivacyAndTerms)
                         }
                     }
                 }

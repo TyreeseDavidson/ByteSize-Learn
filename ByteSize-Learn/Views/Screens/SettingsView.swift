@@ -16,9 +16,6 @@ struct SettingsView: View {
             Text("Settings")
         }
         .padding(.bottom, 10)
-        Button("Push Account") {
-            coordinator.push(.Account)
-        }
         Button("Push About") {
             coordinator.push(.About)
         }
