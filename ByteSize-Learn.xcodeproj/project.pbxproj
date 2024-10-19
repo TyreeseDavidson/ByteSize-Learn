@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2D8B1EEF2CC417C8001C30D5 /* ByteSize_LearnApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B1EEE2CC417C8001C30D5 /* ByteSize_LearnApp.swift */; };
-		2D8B1EF12CC417C8001C30D5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B1EF02CC417C8001C30D5 /* ContentView.swift */; };
 		2D8B1EF32CC417C9001C30D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D8B1EF22CC417C9001C30D5 /* Assets.xcassets */; };
 		2D8B1EF62CC417C9001C30D5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D8B1EF52CC417C9001C30D5 /* Preview Assets.xcassets */; };
 		2D8B1F002CC417C9001C30D5 /* ByteSize_LearnTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B1EFF2CC417C9001C30D5 /* ByteSize_LearnTests.swift */; };
@@ -22,6 +21,10 @@
 		2DA10A2B2CC41C4A007BE130 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A2A2CC41C4A007BE130 /* AccountView.swift */; };
 		2DA10A2D2CC41C60007BE130 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A2C2CC41C60007BE130 /* LoginView.swift */; };
 		2DA10A2F2CC41C8D007BE130 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A2E2CC41C8D007BE130 /* OnboardingView.swift */; };
+		2DA10A312CC41D0B007BE130 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A302CC41D0B007BE130 /* HomePageView.swift */; };
+		2DA10A332CC41D6B007BE130 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A322CC41D6B007BE130 /* SettingsView.swift */; };
+		2DA10A362CC41DC5007BE130 /* ExampleSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A352CC41DC5007BE130 /* ExampleSheetView.swift */; };
+		2DA10A382CC41DD1007BE130 /* ExmpleFullScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A372CC41DD1007BE130 /* ExmpleFullScreenView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,7 +47,6 @@
 /* Begin PBXFileReference section */
 		2D8B1EEB2CC417C8001C30D5 /* ByteSize-Learn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ByteSize-Learn.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D8B1EEE2CC417C8001C30D5 /* ByteSize_LearnApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteSize_LearnApp.swift; sourceTree = "<group>"; };
-		2D8B1EF02CC417C8001C30D5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2D8B1EF22CC417C9001C30D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2D8B1EF52CC417C9001C30D5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2D8B1EFB2CC417C9001C30D5 /* ByteSize-LearnTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ByteSize-LearnTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +62,10 @@
 		2DA10A2A2CC41C4A007BE130 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		2DA10A2C2CC41C60007BE130 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		2DA10A2E2CC41C8D007BE130 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		2DA10A302CC41D0B007BE130 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
+		2DA10A322CC41D6B007BE130 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		2DA10A352CC41DC5007BE130 /* ExampleSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExampleSheetView.swift; path = ../../../../Desktop/Foodreal/Foodreal/Views/Examples/ExampleSheetView.swift; sourceTree = "<group>"; };
+		2DA10A372CC41DD1007BE130 /* ExmpleFullScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExmpleFullScreenView.swift; path = ../../../../Desktop/Foodreal/Foodreal/Views/Examples/ExmpleFullScreenView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +153,7 @@
 		2DA10A1B2CC41947007BE130 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2DA10A342CC41DB1007BE130 /* Example */,
 				2DA10A252CC41B05007BE130 /* Navigation */,
 				2DA10A222CC41AD1007BE130 /* Shared */,
 				2DA10A1D2CC41978007BE130 /* Screens */,
@@ -166,11 +173,12 @@
 		2DA10A1D2CC41978007BE130 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				2D8B1EF02CC417C8001C30D5 /* ContentView.swift */,
 				2DA10A282CC41C25007BE130 /* AboutView.swift */,
 				2DA10A2A2CC41C4A007BE130 /* AccountView.swift */,
 				2DA10A2C2CC41C60007BE130 /* LoginView.swift */,
 				2DA10A2E2CC41C8D007BE130 /* OnboardingView.swift */,
+				2DA10A302CC41D0B007BE130 /* HomePageView.swift */,
+				2DA10A322CC41D6B007BE130 /* SettingsView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -189,6 +197,15 @@
 				2DA10A262CC41B18007BE130 /* CoordinatorView.swift */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		2DA10A342CC41DB1007BE130 /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				2DA10A372CC41DD1007BE130 /* ExmpleFullScreenView.swift */,
+				2DA10A352CC41DC5007BE130 /* ExampleSheetView.swift */,
+			);
+			path = Example;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,14 +339,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DA10A212CC41A04007BE130 /* UserAuthModel.swift in Sources */,
+				2DA10A362CC41DC5007BE130 /* ExampleSheetView.swift in Sources */,
 				2DA10A292CC41C25007BE130 /* AboutView.swift in Sources */,
+				2DA10A382CC41DD1007BE130 /* ExmpleFullScreenView.swift in Sources */,
 				2DA10A272CC41B18007BE130 /* CoordinatorView.swift in Sources */,
 				2DA10A2F2CC41C8D007BE130 /* OnboardingView.swift in Sources */,
 				2DA10A2D2CC41C60007BE130 /* LoginView.swift in Sources */,
-				2D8B1EF12CC417C8001C30D5 /* ContentView.swift in Sources */,
 				2DA10A2B2CC41C4A007BE130 /* AccountView.swift in Sources */,
 				2D8B1EEF2CC417C8001C30D5 /* ByteSize_LearnApp.swift in Sources */,
 				2DA10A1F2CC419A7007BE130 /* Coordinator.swift in Sources */,
+				2DA10A332CC41D6B007BE130 /* SettingsView.swift in Sources */,
+				2DA10A312CC41D0B007BE130 /* HomePageView.swift in Sources */,
 				2DA10A242CC41ADC007BE130 /* UIElements.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum Page: String, Identifiable {
-    case Login, Onboarding, Home, Settings, Account, About, PrivacyAndTerms
+    case Login, Onboarding, Home, Settings, Account, About
     
     var id: String {
         self.rawValue
@@ -74,18 +74,12 @@ class Coordinator: ObservableObject {
             OnboardingView()
         case .Home:
             HomePageView()
-        case .Food:
-            FoodView()
-        case .CreateReview:
-            CreateReviewView()
         case .Settings:
             SettingsView()
         case .Account:
             AccountView()
         case .About:
             AboutView()
-        case .PrivacyAndTerms:
-            PrivacyAndTermsView()
             
         }
     }
