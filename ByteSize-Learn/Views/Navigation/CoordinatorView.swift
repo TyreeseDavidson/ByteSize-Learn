@@ -15,7 +15,7 @@ struct CoordinatorView: View {
     
     var body: some View {
         NavigationStack(path: $coordinator.path) {
-            coordinator.build(page: .Home) // Sets home as root
+            coordinator.build(page: .home) // Sets home as root
                 .navigationDestination(for: Page.self) { page in
                     coordinator.build(page: page)
                 }
@@ -27,19 +27,7 @@ struct CoordinatorView: View {
                 }
         }
         .environmentObject(coordinator)
-        
-        /*.onChange(of: userAuth.newUser) {
-            print(userAuth.newUser)
-            print("Empty: ")
-            print(coordinator.path.isEmpty)
-            if !userAuth.newUser {
-                coordinator.popToRoot()
-            }
-        }*/
-
-        
-        
-        
+    
     }
 }
 

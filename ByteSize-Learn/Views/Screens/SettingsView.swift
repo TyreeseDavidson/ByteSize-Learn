@@ -17,7 +17,7 @@ struct SettingsView: View {
         }
         .padding(.bottom, 10)
         Button("Push About") {
-            coordinator.push(.About)
+            coordinator.push(.about)
         }
         .padding(.bottom, 10)
         Button("Pop") {

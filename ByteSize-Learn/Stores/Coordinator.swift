@@ -7,104 +7,124 @@
 
 import SwiftUI
 
-enum Page: String, Identifiable {
-    case Onboarding, Home, Settings, About
-    
+// Make Course conform to Identifiable if needed
+extension Course: Identifiable {
+    var id: String { name }
+}
+
+enum Page: Hashable, Codable, Identifiable {
+    case onboarding, home, settings, about, learning(course: Course)
+
+    var id: String {
+        switch self {
+        case .onboarding:
+            return "onboarding"
+        case .home:
+            return "home"
+        case .settings:
+            return "settings"
+        case .about:
+            return "about"
+        case .learning(let course):
+            return "learning_\(course.name)"
+        }
+    }
+}
+
+enum Sheet: String, Identifiable {
+    case exampleSheet // Add later if needed
+
     var id: String {
         self.rawValue
     }
 }
 
-enum Sheet : String, Identifiable {
-    case ExampleSheet // Add later if needed
-    
-    var id: String {
-        self.rawValue
-    }
-}
+enum FullScreenCover: String, Identifiable {
+    case exampleFullScreen // Add later if needed
 
-enum FullScreenCover : String, Identifiable {
-    case ExampleFullScreen // Add later if needed
-    
     var id: String {
         self.rawValue
     }
 }
 
 class Coordinator: ObservableObject {
-    
+
     @Published var path = NavigationPath()
     @Published var sheet: Sheet?
     @Published var fullScreenCover: FullScreenCover?
-    
-    func push(_ page: Page){
+
+    func push(_ page: Page) {
         path.append(page)
     }
-    
-    func present(sheet: Sheet){
+
+    func present(sheet: Sheet) {
         self.sheet = sheet
     }
-    
-    func present(fullScreenCover: FullScreenCover){
+
+    func present(fullScreenCover: FullScreenCover) {
         self.fullScreenCover = fullScreenCover
     }
-    
+
     func pop() {
-        path.removeLast()
+        if !path.isEmpty {
+            path.removeLast()
+        }
     }
-    
+
     func popToRoot() {
         path.removeLast(path.count)
     }
-    
-    func dismissSheet(){
-        self.sheet = nil;
+
+    func dismissSheet() {
+        self.sheet = nil
     }
-    
-    func dismissFullScreenCover(){
-        self.fullScreenCover = nil;
+
+    func dismissFullScreenCover() {
+        self.fullScreenCover = nil
     }
-    
+
     @ViewBuilder
     func build(page: Page) -> some View {
         switch page {
-        case .Onboarding:
+        case .onboarding:
             OnboardingView()
-        case .Home:
+                .environmentObject(self)
+        case .home:
             HomePageView()
-        case .Settings:
+                .environmentObject(self)
+        case .learning(let course):
+            LearningView(course: course)
+                .environmentObject(self)
+        case .settings:
             SettingsView()
-        case .About:
+                .environmentObject(self)
+        case .about:
             AboutView()
-            
+                .environmentObject(self)
         }
     }
-    
+
     @ViewBuilder
     func build(sheet: Sheet) -> some View {
         switch sheet {
-        case .ExampleSheet:
+        case .exampleSheet:
             // ExampleSheetView()
-            
             // Wrap in a navigation stack if you want to see the navigation title
             NavigationStack {
-                //ExampleSheetView()
+                // ExampleSheetView()
             }
         }
     }
-    
+
     @ViewBuilder
     func build(fullScreenCover: FullScreenCover) -> some View {
         switch fullScreenCover {
-        case .ExampleFullScreen:
-            // ExmpleFullScreenView()
-            
+        case .exampleFullScreen:
+            // ExampleFullScreenView()
             // Wrap in a navigation stack if you want to see the navigation title
             NavigationStack {
-                //ExmpleFullScreenView()
+                // ExampleFullScreenView()
             }
         }
     }
-    
 }
-

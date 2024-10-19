@@ -16,7 +16,7 @@ struct AsyncImage<Placeholder: View>: View {
 
     var body: some View {
         ZStack {
-            if let data = data, let uiImage = UIImage(data: data) {
+            if let data = data, let _ = UIImage(data: data) {
                 self.image(data)
                     .resizable()
                     .mask{
