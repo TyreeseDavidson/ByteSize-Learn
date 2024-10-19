@@ -15,6 +15,7 @@
 		2D8B1F0A2CC417C9001C30D5 /* ByteSize_LearnUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B1F092CC417C9001C30D5 /* ByteSize_LearnUITests.swift */; };
 		2D8B1F0C2CC417C9001C30D5 /* ByteSize_LearnUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B1F0B2CC417C9001C30D5 /* ByteSize_LearnUITestsLaunchTests.swift */; };
 		2DA10A1F2CC419A7007BE130 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A1E2CC419A7007BE130 /* Coordinator.swift */; };
+		2DA10A212CC41A04007BE130 /* UserAuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA10A202CC41A04007BE130 /* UserAuthModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		2D8B1F092CC417C9001C30D5 /* ByteSize_LearnUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteSize_LearnUITests.swift; sourceTree = "<group>"; };
 		2D8B1F0B2CC417C9001C30D5 /* ByteSize_LearnUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteSize_LearnUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		2DA10A1E2CC419A7007BE130 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		2DA10A202CC41A04007BE130 /* UserAuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				2DA10A1E2CC419A7007BE130 /* Coordinator.swift */,
+				2DA10A202CC41A04007BE130 /* UserAuthModel.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DA10A212CC41A04007BE130 /* UserAuthModel.swift in Sources */,
 				2D8B1EF12CC417C8001C30D5 /* ContentView.swift in Sources */,
 				2D8B1EEF2CC417C8001C30D5 /* ByteSize_LearnApp.swift in Sources */,
 				2DA10A1F2CC419A7007BE130 /* Coordinator.swift in Sources */,
