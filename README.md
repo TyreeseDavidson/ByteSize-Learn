@@ -16,8 +16,6 @@ ByteSize-Learn is designed to help college students efficiently learn and practi
 In today’s fast-paced academic environment, students often need quick, focused ways to practice and review key concepts without the time commitment of full-length problem sets. ByteSize-Learn aims to fill that gap, offering an effective and engaging solution for microlearning in higher education.
 
 ### Courses Offered
-ByteSize-Learn currently supports practice questions for the following courses:
-
 - **System Software** 
 - **Data Structures and Algorithms** 
 - **Intro to Java Programing** 
