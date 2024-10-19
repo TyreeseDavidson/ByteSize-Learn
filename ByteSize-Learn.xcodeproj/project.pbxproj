@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2D6317662CC437D30043325E /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6317652CC437D30043325E /* CardView.swift */; };
 		2D6317682CC437E50043325E /* LearningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6317672CC437E50043325E /* LearningView.swift */; };
+		2D63176B2CC441560043325E /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D63176A2CC441560043325E /* Course.swift */; };
+		2D63176D2CC4417E0043325E /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D63176C2CC4417E0043325E /* Card.swift */; };
 		2D8B1EEF2CC417C8001C30D5 /* ByteSize_LearnApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B1EEE2CC417C8001C30D5 /* ByteSize_LearnApp.swift */; };
 		2D8B1EF32CC417C9001C30D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D8B1EF22CC417C9001C30D5 /* Assets.xcassets */; };
 		2D8B1EF62CC417C9001C30D5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D8B1EF52CC417C9001C30D5 /* Preview Assets.xcassets */; };
@@ -56,6 +58,8 @@
 /* Begin PBXFileReference section */
 		2D6317652CC437D30043325E /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		2D6317672CC437E50043325E /* LearningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningView.swift; sourceTree = "<group>"; };
+		2D63176A2CC441560043325E /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		2D63176C2CC4417E0043325E /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		2D8B1EEB2CC417C8001C30D5 /* ByteSize-Learn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ByteSize-Learn.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D8B1EEE2CC417C8001C30D5 /* ByteSize_LearnApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteSize_LearnApp.swift; sourceTree = "<group>"; };
 		2D8B1EF22CC417C9001C30D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -111,6 +115,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D6317692CC441470043325E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2D63176A2CC441560043325E /* Course.swift */,
+				2D63176C2CC4417E0043325E /* Card.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		2D8B1EE22CC417C8001C30D5 = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +147,7 @@
 		2D8B1EED2CC417C8001C30D5 /* ByteSize-Learn */ = {
 			isa = PBXGroup;
 			children = (
+				2D6317692CC441470043325E /* Models */,
 				2DA10A1C2CC4195F007BE130 /* Stores */,
 				2DA10A1B2CC41947007BE130 /* Views */,
 				2D8B1EEE2CC417C8001C30D5 /* ByteSize_LearnApp.swift */,
@@ -363,11 +377,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DA10A292CC41C25007BE130 /* AboutView.swift in Sources */,
+				2D63176B2CC441560043325E /* Course.swift in Sources */,
 				2D6317662CC437D30043325E /* CardView.swift in Sources */,
 				2DA10A272CC41B18007BE130 /* CoordinatorView.swift in Sources */,
 				2DA10A2F2CC41C8D007BE130 /* OnboardingView.swift in Sources */,
 				2D8B1EEF2CC417C8001C30D5 /* ByteSize_LearnApp.swift in Sources */,
 				2DA10A1F2CC419A7007BE130 /* Coordinator.swift in Sources */,
+				2D63176D2CC4417E0043325E /* Card.swift in Sources */,
 				2DA10A332CC41D6B007BE130 /* SettingsView.swift in Sources */,
 				2DA10A312CC41D0B007BE130 /* HomePageView.swift in Sources */,
 				2D6317682CC437E50043325E /* LearningView.swift in Sources */,

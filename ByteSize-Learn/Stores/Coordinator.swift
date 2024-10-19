@@ -8,7 +8,7 @@
 import SwiftUI
 
 // Make Course conform to Identifiable if needed
-extension Course: Identifiable {
+extension Course {
     var id: String { name }
 }
 
@@ -88,19 +88,14 @@ class Coordinator: ObservableObject {
         switch page {
         case .onboarding:
             OnboardingView()
-                .environmentObject(self)
         case .home:
             HomePageView()
-                .environmentObject(self)
         case .learning(let course):
             LearningView(course: course)
-                .environmentObject(self)
         case .settings:
             SettingsView()
-                .environmentObject(self)
         case .about:
             AboutView()
-                .environmentObject(self)
         }
     }
 

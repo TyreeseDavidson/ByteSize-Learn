@@ -7,16 +7,11 @@
 
 import SwiftUI
 
-struct Course: Hashable, Codable {
-    let name: String
-    let description: String
-}
-
 struct LearningView: View {
     @EnvironmentObject private var coordinator: Coordinator
     let course: Course
 
-    @State private var cards: [CardViewModel] = []
+    @State private var cards: [CardModel] = []
     @State private var topCardOffset = CGSize.zero
 
     var body: some View {
@@ -28,10 +23,9 @@ struct LearningView: View {
             ForEach(Array(cards.enumerated()), id: \.element.id) { index, card in
                 let isTopCard = index == cards.count - 1
                 CardView(card: card)
-                    .offset(y: isTopCard ? topCardOffset.height : CGFloat(cards.count - index) * 10)
-                    .scaleEffect(isTopCard ? 1.0 : 1.0 - CGFloat(cards.count - index) * 0.02)
+                    .offset(y: isTopCard ? topCardOffset.height : CGFloat(cards.count - index) * 5)
+                    .scaleEffect(isTopCard ? 1.0 : 1.0 - CGFloat(cards.count - index) * 0.01)
                     .rotationEffect(.degrees(isTopCard ? Double(topCardOffset.width / 20) : 0))
-                    .animation(.spring(), value: topCardOffset)
                     .gesture(
                         isTopCard ? DragGesture()
                             .onChanged { value in
@@ -56,53 +50,42 @@ struct LearningView: View {
                         : nil
                     )
                     .allowsHitTesting(isTopCard)
-                    .zIndex(Double(index) * -1) // Ensure the top card is on top
+                    .animation(.spring(), value: topCardOffset)
+                    .zIndex(Double(index)) // Updated zIndex
             }
-
-            // Top Bar with Back Button and Course Info
-            VStack {
-                HStack {
-                    Button(action: {
-                        coordinator.pop()
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(.blue)
-                            .imageScale(.large)
-                    }
-                    .padding()
-                    Spacer()
-                }
-                Spacer()
-            }
-            .edgesIgnoringSafeArea(.top)
-
-            // Course Information
-            VStack {
-                Text(course.name)
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(.top, 80)
-                Text(course.description)
-                    .font(.subheadline)
-                    .padding(.horizontal)
-                    .multilineTextAlignment(.center)
-                Spacer()
-            }
-            .zIndex(1) // Ensure the course info is above the cards
         }
         .onAppear {
             // Load initial cards when the view appears
             self.loadInitialCards()
         }
+        .navigationTitle("Learning")
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    coordinator.popToRoot()
+                }) {
+                    Image(systemName: "xmark")
+                        .foregroundColor(.primary)
+                        .imageScale(.large)
+                        .padding(8)
+                        .background(
+                            Circle()
+                                .fill(Color(UIColor.secondarySystemBackground))
+                        )
+                }
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline) // Optional: makes the title look cleaner
     }
 
     // Function to load the initial cards based on the course
     func loadInitialCards() {
         // Replace this with actual content fetching logic
         self.cards = [
-            CardViewModel(content: "\(course.name) Topic 1"),
-            CardViewModel(content: "\(course.name) Topic 2"),
-            CardViewModel(content: "\(course.name) Topic 3"),
+            CardModel(content: "Topic 1: \(course.name) Basics"),
+            CardModel(content: "Topic 2: Advanced \(course.name)"),
+            CardModel(content: "Topic 3: \(course.name) in Practice"),
             // Add more cards as needed
         ]
     }
@@ -110,17 +93,8 @@ struct LearningView: View {
     // Function to load the next card
     func loadNextCard() {
         // Fetch or generate the next card specific to the course
-        let newCard = CardViewModel(content: "New \(course.name) Topic")
+        let newCard = CardModel(content: "New Topic in \(course.name)")
         // Add the new card to the bottom of the stack
         self.cards.insert(newCard, at: 0)
     }
 }
-
-//#Preview {
-//    let sampleCourse = Course(
-//        name: "Mathematics",
-//        description: "Learn the fundamentals of mathematics."
-//    )
-//    LearningView(course: sampleCourse)
-//        .environmentObject(Coordinator())
-//}

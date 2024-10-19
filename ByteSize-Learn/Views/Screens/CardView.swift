@@ -7,15 +7,8 @@
 
 import SwiftUI
 
-// Model for each card
-struct CardViewModel: Identifiable {
-    let id = UUID()
-    let content: String
-}
-
-// View for each card
 struct CardView: View {
-    let card: CardViewModel
+    let card: CardModel
     var body: some View {
         VStack {
             Spacer()
