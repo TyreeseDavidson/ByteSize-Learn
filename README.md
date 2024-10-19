@@ -1,6 +1,4 @@
 # ByteSize-Learn
-Lehigh University CSBA 2024 Hackathon 
-
 Welcome to ByteSize-Learn, a microlearning app developed during the Lehigh University CSBA 2024 Hackathon!
 
 ## Project Overview
