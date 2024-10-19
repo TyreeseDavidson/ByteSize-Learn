@@ -9,7 +9,22 @@ ByteSize-Learn is designed to help college students efficiently learn and practi
 ### Features
 - **Course-Specific Practice:** Users can choose courses they are enrolled in and receive relevant questions to reinforce their knowledge.
 - **Quick Question Format:** Short, practice-focused questions designed to promote fast learning and retention.
+- **Instant Feedback:** Each question provides immediate feedback, helping students understand mistakes and learn correct answers in real-time.
+
 
 ### Why ByteSize-Learn?
 In today’s fast-paced academic environment, students often need quick, focused ways to practice and review key concepts without the time commitment of full-length problem sets. ByteSize-Learn aims to fill that gap, offering an effective and engaging solution for microlearning in higher education.
+
+### Courses Offered
+ByteSize-Learn currently supports practice questions for the following courses:
+
+- **System Software** 
+- **Data Structures and Algorithms** 
+- **Intro to Java Programing** 
+- **Discrete Math** 
+
+### Technologies Used
+- **Programming Language:** Swift
+- **Platform:** iOS
+- **Development Tools:** Xcode
 
