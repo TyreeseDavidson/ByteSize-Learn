@@ -67,7 +67,7 @@ struct LearningView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 CloseButtonView {
-                    coordinator.popToRoot()
+                    coordinator.navigateToHome()
                 }
             }
         }

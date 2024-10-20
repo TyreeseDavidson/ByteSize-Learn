@@ -14,11 +14,12 @@ struct CoordinatorView: View {
     var body: some View {
         NavigationStack(path: $coordinator.path) {
             Group {
-                if isFirstTimeLogin {
-                    coordinator.build(page: .onboarding)
-                } else {
-                    coordinator.build(page: .home)
-                }
+                coordinator.build(page: .onboarding)
+//                if isFirstTimeLogin {
+//                    coordinator.build(page: .onboarding)
+//                } else {
+//                    coordinator.build(page: .home)
+//                }
             }
             .navigationDestination(for: Page.self) { page in
                 coordinator.build(page: page)

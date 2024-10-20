@@ -4,142 +4,325 @@
 //
 //  Created by Eli Peter on 10/19/24.
 //
+
 import SwiftUI
 
 struct OnboardingView: View {
+    @EnvironmentObject private var courseData: CourseData
     @EnvironmentObject private var coordinator: Coordinator
-    @State private var currentStep = 0
+    @State private var selectedTab = 0
     @State private var acceptedNotifications = false
     @State private var acceptedTerms = false
-    @State private var selectedCourses: Set<String> = []
-    @State private var customCourse = ""
-    @State private var availableCourses = ["System Software", "Data Structures and Algorithms", "Intro to Java Programming", "Discrete Math"]
+    @State private var isAddingCourse = false
+    @State private var showErrorAlert = false
+    @State private var errorMessage = ""
+    
+    // Total number of onboarding steps
+    private let totalTabs = 4
     
     var body: some View {
         VStack {
-            Spacer()
-            
-            switch currentStep {
-            case 0:
+            TabView(selection: $selectedTab) {
                 welcomeView
-            case 1:
+                    .tag(0)
+                
+                infoView
+                    .tag(1)
+                
                 notificationView
-            case 2:
-                termsView
-            case 3:
+                    .tag(2)
+                
                 courseSelectionView
-            default:
-                Text("Onboarding Complete!")
+                    .tag(3)
             }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+            .animation(.easeInOut, value: selectedTab)
             
-            Spacer()
-            
-            HStack {
-                if currentStep > 0 {
-                    Button("Back") {
-                        currentStep -= 1
-                    }
-                }
-                
-                Spacer()
-                
-                Button(action: nextStep) {
-                    Text(currentStep == 3 ? "Finish" : "Next")
-                }
-            }
-            .padding()
+//            // Navigation Controls
+//            HStack {
+//                if selectedTab > 0 {
+//                    Button(action: {
+//                        withAnimation {
+//                            selectedTab -= 1
+//                        }
+//                    }) {
+//                        Text("Back")
+//                            .fontWeight(.semibold)
+//                            .padding()
+//                            .frame(maxWidth: .infinity)
+//                            .background(Color.gray.opacity(0.2))
+//                            .cornerRadius(10)
+//                    }
+//                } else {
+//                    // Placeholder to align the "Next" button
+//                    Spacer()
+//                        .frame(maxWidth: .infinity)
+//                }
+//                
+//                Spacer()
+//                
+//                Button(action: nextStep) {
+//                    Text(selectedTab == totalTabs - 1 ? "Finish" : "Next")
+//                        .fontWeight(.semibold)
+//                        .padding()
+//                        .frame(maxWidth: .infinity)
+//                        .background(Color.blue)
+//                        .foregroundColor(.white)
+//                        .cornerRadius(10)
+//                }
+//            }
+//            .padding([.horizontal, .bottom])
         }
-        .navigationBarTitle("Welcome to ByteSize-Learn")
-        .navigationBarHidden(true)
+        .alert(isPresented: $showErrorAlert) {
+            Alert(title: Text("Error"),
+                  message: Text(errorMessage),
+                  dismissButton: .default(Text("OK")))
+        }
+        .navigationBarTitle("Welcome to ByteSize-Learn", displayMode: .inline)
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [Color.purple.opacity(0.3), Color.blue.opacity(0.3)]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .edgesIgnoringSafeArea(.all)
+        )
     }
+    
+    // MARK: - Tab Views
     
     var welcomeView: some View {
         VStack {
-            Text("Welcome to ByteSize-Learn!")
+            Spacer()
+            
+            // Welcome Text or App Title
+            TypingTextView(text: "ByteSize Learning")
                 .font(.largeTitle)
-            Text("Let's get you set up for efficient microlearning.")
+                .fontWeight(.bold)
+                .padding()
+            
+            // Description or tagline
+            Text("Replace doom scrolling with micro-learning!")
+                .font(.headline)
                 .multilineTextAlignment(.center)
+                .padding(.horizontal)
+            
+            Spacer()
         }
+        .tag(0)
+    }
+    
+    var infoView: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            TypingTextView(text: "Features")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding(.bottom, 10)
+    
+            HStack(alignment: .top, spacing: 10) {
+                Image(systemName: "book.fill")
+                    .foregroundColor(.green)
+                Text("• Curated Courses")
+                    .font(.title3)
+            }
+    
+            HStack(alignment: .top, spacing: 10) {
+                Image(systemName: "flashlight.on.fill")
+                    .foregroundColor(.orange)
+                Text("• Interactive Flashcards")
+                    .font(.title3)
+            }
+    
+            HStack(alignment: .top, spacing: 10) {
+                Image(systemName: "chart.bar.fill")
+                    .foregroundColor(.purple)
+                Text("• Progress Tracking")
+                    .font(.title3)
+            }
+    
+            Spacer()
+        }
+        .padding()
+        .tag(1)
     }
     
     var notificationView: some View {
-        VStack {
+        VStack(spacing: 20) {
             Text("Enable Notifications")
                 .font(.title)
+                .fontWeight(.bold)
+            
             Text("Receive timely reminders for your learning sessions.")
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+            
             Toggle("Allow Notifications", isOn: $acceptedNotifications)
                 .padding()
+                .background(Color(UIColor.secondarySystemBackground))
+                .cornerRadius(10)
+                .padding(.horizontal)
+            
+            Spacer()
         }
-    }
-    
-    var termsView: some View {
-        VStack {
-            Text("Terms and Conditions")
-                .font(.title)
-            Text("Please read and accept our terms of service.")
-            Toggle("I accept the terms and conditions", isOn: $acceptedTerms)
-                .padding()
-        }
+        .padding()
+        .tag(2)
     }
     
     var courseSelectionView: some View {
-            VStack {
-                Text("Select Your Courses")
-                    .font(.title)
-                Text("Choose the courses you're enrolled in:")
-                
-                List {
-                    ForEach(availableCourses, id: \.self) { course in
-                        Toggle(course, isOn: Binding(
-                            get: { selectedCourses.contains(course) },
-                            set: { isSelected in
-                                if isSelected {
-                                    selectedCourses.insert(course)
-                                } else {
-                                    selectedCourses.remove(course)
-                                }
-                            }
-                        ))
-                    }
-                    .onDelete(perform: deleteCourse)
-                    
-                    HStack {
-                        TextField("Enter a custom course", text: $customCourse)
-                        Button(action: addCustomCourse) {
-                            Image(systemName: "plus.circle.fill")
+        VStack(spacing: 20) {
+            TypingTextView(text: "Get Started")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding()
+            
+            Text("Let's set up your first courses to begin your learning journey.")
+                .font(.title3)
+                .multilineTextAlignment(.center)
+                .padding()
+            
+            ForEach(courseData.courses, id: \.id) { course in
+                VStack(alignment: .leading) {
+                    Text(course.name)
+                        .font(.headline)
+                    Text(course.description)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+            }
+            .onDelete(perform: courseData.removeCourse)
+            
+//            List {
+//                Section(header: Text("Manage Courses")) {
+//                    ForEach(courseData.courses, id: \.id) { course in
+//                        VStack(alignment: .leading) {
+//                            Text(course.name)
+//                                .font(.headline)
+//                            Text(course.description)
+//                                .font(.subheadline)
+//                                .foregroundColor(.gray)
+//                        }
+//                    }
+//                    .onDelete(perform: courseData.removeCourse)
+//
+//                    Button(action: {
+//                        isAddingCourse = true
+//                    }) {
+//                        HStack {
+//                            Image(systemName: "plus.circle.fill")
+//                            Text("Add New Course")
+//                        }
+//                    }
+//                }
+//            }
+
+            
+            Button(action: {
+                isAddingCourse = true
+            }) {
+                HStack {
+                    Image(systemName: "plus.circle.fill")
+                    Text("Add Your First Course")
+                        .font(.headline)
+                }
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+            }
+            .padding(.horizontal)
+            .sheet(isPresented: $isAddingCourse) {
+                AddCourseView { newCourse in
+                    Task {
+                        do {
+                            let fetchedCards = try await fetchCardsForCourse(course: newCourse)
+                            let updatedCourse = Course(
+                                name: newCourse.name,
+                                description: newCourse.description,
+                                cards: fetchedCards
+                            )
+                            courseData.addCourse(updatedCourse)
+                        } catch {
+                            print("Failed to fetch cards: \(error)")
+                            // Optionally, handle the error (e.g., show an alert to the user)
                         }
                     }
                 }
             }
-        }
-        
-        func addCustomCourse() {
-            let trimmedCourse = customCourse.trimmingCharacters(in: .whitespacesAndNewlines)
-            if !trimmedCourse.isEmpty && !availableCourses.contains(trimmedCourse) {
-                availableCourses.append(trimmedCourse)
-                selectedCourses.insert(trimmedCourse)
-                customCourse = ""
+            
+            Spacer()
+            
+            Button(action: {
+                if courseData.courses.isEmpty {
+                    errorMessage = "Please add at least one course to proceed."
+                    showErrorAlert = true
+                } else {
+                    coordinator.navigateToHome()
+                }
+            }) {
+                Text("Continue")
+                    .font(.headline)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(courseData.courses.isEmpty ? Color.gray : Color.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
             }
+            .padding(.horizontal)
+            .disabled(courseData.courses.isEmpty)
         }
-        func nextStep() {
-            if currentStep < 3 {
-                currentStep += 1
-            } else {
-                finishOnboarding()
+        .padding()
+        .tag(3)
+    }
+    
+    // MARK: - Navigation Functions
+    
+    func nextStep() {
+        if selectedTab < totalTabs - 1 {
+            withAnimation {
+                selectedTab += 1
             }
-        }
-        
-        func deleteCourse(at offsets: IndexSet) {
-            let coursesToRemove = offsets.map { availableCourses[$0] }
-            availableCourses.remove(atOffsets: offsets)
-            selectedCourses.subtract(coursesToRemove)
-        }
-        
-        func finishOnboarding() {
-            UserDefaults.standard.set(acceptedNotifications, forKey: "acceptedNotifications")
-            UserDefaults.standard.set(Array(selectedCourses), forKey: "selectedCourses")
-            UserDefaults.standard.set(availableCourses, forKey: "availableCourses")
-            UserDefaults.standard.set(false, forKey: "isFirstTimeLogin")
-            coordinator.navigateToHome()
+        } else {
+            finishOnboarding()
         }
     }
+    
+    func finishOnboarding() {
+        // Save onboarding preferences if needed
+        // UserDefaults.standard.set(acceptedNotifications, forKey: "acceptedNotifications")
+        // UserDefaults.standard.set(false, forKey: "isFirstTimeLogin")
+        coordinator.navigateToHome()
+    }
+    
+    // MARK: - Optional: Fetch Cards for Course
+    
+    func fetchCardsForCourse(course: Course) async throws -> [CardModel] {
+        var allFetchedCards: [CardModel] = []
+        
+        try await withThrowingTaskGroup(of: CardModel.self) { group in
+            for _ in 1...5 {
+                allFetchedCards.append (
+                    try await APIService.shared.generateCard(
+                        courseTitle: course.name,
+                        courseDescription: course.description,
+                        correctCount: 0,
+                        incorrectCount: 0,
+                        previousQuestions: allFetchedCards
+                    )
+                )
+            }
+        }
+        
+        return allFetchedCards
+    }
+}
+
+// MARK: - Preview
+
+struct OnboardingView_Previews: PreviewProvider {
+    static var previews: some View {
+        OnboardingView()
+            .environmentObject(CourseData())
+            .environmentObject(Coordinator())
+    }
+}

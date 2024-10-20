@@ -23,6 +23,10 @@
 		2D6317862CC458AE0043325E /* PromptGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6317852CC458AE0043325E /* PromptGenerator.swift */; };
 		2D63178A2CC480FE0043325E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D6317892CC480FE0043325E /* Secrets.plist */; };
 		2D63178E2CC481A90043325E /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D63178D2CC481A90043325E /* Secrets.swift */; };
+		2D6317922CC496680043325E /* AddCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6317912CC496680043325E /* AddCourseView.swift */; };
+		2D6317952CC499E00043325E /* CourseCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6317942CC499E00043325E /* CourseCache.swift */; };
+		2D6317972CC49C7C0043325E /* CourseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6317962CC49C7C0043325E /* CourseData.swift */; };
+		2D6317992CC4A1A00043325E /* TypingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6317982CC4A1A00043325E /* TypingTextView.swift */; };
 		2D8B1EEF2CC417C8001C30D5 /* ByteSize_LearnApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B1EEE2CC417C8001C30D5 /* ByteSize_LearnApp.swift */; };
 		2D8B1EF32CC417C9001C30D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D8B1EF22CC417C9001C30D5 /* Assets.xcassets */; };
 		2D8B1EF62CC417C9001C30D5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D8B1EF52CC417C9001C30D5 /* Preview Assets.xcassets */; };
@@ -84,6 +88,10 @@
 		2D6317852CC458AE0043325E /* PromptGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptGenerator.swift; sourceTree = "<group>"; };
 		2D6317892CC480FE0043325E /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		2D63178D2CC481A90043325E /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Secrets.swift; path = ../../../.Trash/Secrets.swift; sourceTree = "<group>"; };
+		2D6317912CC496680043325E /* AddCourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourseView.swift; sourceTree = "<group>"; };
+		2D6317942CC499E00043325E /* CourseCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseCache.swift; sourceTree = "<group>"; };
+		2D6317962CC49C7C0043325E /* CourseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseData.swift; sourceTree = "<group>"; };
+		2D6317982CC4A1A00043325E /* TypingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingTextView.swift; sourceTree = "<group>"; };
 		2D8B1EEB2CC417C8001C30D5 /* ByteSize-Learn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ByteSize-Learn.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D8B1EEE2CC417C8001C30D5 /* ByteSize_LearnApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteSize_LearnApp.swift; sourceTree = "<group>"; };
 		2D8B1EF22CC417C9001C30D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -144,6 +152,7 @@
 			children = (
 				2D63176A2CC441560043325E /* Course.swift */,
 				2D63176C2CC4417E0043325E /* Card.swift */,
+				2D6317962CC49C7C0043325E /* CourseData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -167,6 +176,7 @@
 				2D63177B2CC4484D0043325E /* CardStackView.swift */,
 				2D63177D2CC4486A0043325E /* CloseButtonView.swift */,
 				2D6317802CC44CFB0043325E /* PopupView.swift */,
+				2D6317912CC496680043325E /* AddCourseView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -179,6 +189,14 @@
 				2D6317852CC458AE0043325E /* PromptGenerator.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		2D6317932CC499D10043325E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2D6317942CC499E00043325E /* CourseCache.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		2D8B1EE22CC417C8001C30D5 = {
@@ -205,6 +223,7 @@
 		2D8B1EED2CC417C8001C30D5 /* ByteSize-Learn */ = {
 			isa = PBXGroup;
 			children = (
+				2D6317932CC499D10043325E /* Helpers */,
 				2D6317782CC446CA0043325E /* Sample */,
 				2D6317822CC457180043325E /* Services */,
 				2D6317692CC441470043325E /* Models */,
@@ -277,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				2DA10A232CC41ADC007BE130 /* UIElements.swift */,
+				2D6317982CC4A1A00043325E /* TypingTextView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -448,6 +468,7 @@
 				2D6317662CC437D30043325E /* CardView.swift in Sources */,
 				2DA10A272CC41B18007BE130 /* CoordinatorView.swift in Sources */,
 				2D63177C2CC4484D0043325E /* CardStackView.swift in Sources */,
+				2D6317972CC49C7C0043325E /* CourseData.swift in Sources */,
 				2D6317732CC446600043325E /* TrueFalseView.swift in Sources */,
 				2DA10A2F2CC41C8D007BE130 /* OnboardingView.swift in Sources */,
 				2D63177A2CC446D50043325E /* SampleData.swift in Sources */,
@@ -455,7 +476,10 @@
 				2D8B1EEF2CC417C8001C30D5 /* ByteSize_LearnApp.swift in Sources */,
 				2DA10A1F2CC419A7007BE130 /* Coordinator.swift in Sources */,
 				2D63176D2CC4417E0043325E /* Card.swift in Sources */,
+				2D6317992CC4A1A00043325E /* TypingTextView.swift in Sources */,
 				2D6317812CC44CFB0043325E /* PopupView.swift in Sources */,
+				2D6317952CC499E00043325E /* CourseCache.swift in Sources */,
+				2D6317922CC496680043325E /* AddCourseView.swift in Sources */,
 				2DA10A332CC41D6B007BE130 /* SettingsView.swift in Sources */,
 				2D6317772CC446850043325E /* LongAnswerView.swift in Sources */,
 				2D6317752CC446720043325E /* ShortAnswerView.swift in Sources */,

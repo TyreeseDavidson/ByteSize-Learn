@@ -10,7 +10,7 @@ import Foundation
 struct Course: Hashable, Codable, Identifiable {
     let name: String
     let description: String
-    let cards: [CardModel]
+    var cards: [CardModel]
     
     init(name: String, description: String, cards: [CardModel] = []) {
         self.name = name

@@ -18,10 +18,12 @@ import SwiftUI
 
 @main
 struct ByteSize_LearnApp: App {
-    //@UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject private var courseData = CourseData()
+
     var body: some Scene {
         WindowGroup {
             CoordinatorView()
+                .environmentObject(courseData)
         }
     }
 }
