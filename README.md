@@ -23,4 +23,6 @@ In today’s fast-paced academic environment, students often need quick, focused
 - **Programming Language:** Swift
 - **Platform:** iOS
 - **Development Tools:** Xcode
+- **AWS Bedrock** For access to Claude 3.5 Sonnet
+- **AWS Lambda + API Gateway** To call AWS Bedrock
 
