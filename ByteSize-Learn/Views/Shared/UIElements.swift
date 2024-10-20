@@ -39,37 +39,37 @@ struct AsyncImage<Placeholder: View>: View {
     }
 }
 
-struct DropdownButton: View {
-    var title: String
-    var icon: String?
-    var url: String?
-    var action: () -> Void
-
-    var body: some View {
-        HStack {
-            Button(action: action) {
-                if let icon = icon {
-                    Image(systemName: icon)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
-                } else if let urlString = url, let url = URL(string: urlString) {
-                    AsyncImage(
-                        url: url,
-                        placeholder: Text("Loading..."),
-                        image: { Image(uiImage: UIImage(data: $0)!) }
-                    )
-                    .frame(width: 50, height: 50)
-                }
-            }
-            .buttonStyle(RoundButtonStyle())
-            
-            Text(title)
-                .foregroundStyle(.white)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading) // Ensure HStack takes full width for alignment
-    }
-}
+//struct DropdownButton: View {
+//    var title: String
+//    var icon: String?
+//    var url: String?
+//    var action: () -> Void
+//
+//    var body: some View {
+//        HStack {
+//            Button(action: action) {
+//                if let icon = icon {
+//                    Image(systemName: icon)
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(width: 24, height: 24)
+//                } else if let urlString = url, let url = URL(string: urlString) {
+//                    AsyncImage(
+//                        url: url,
+//                        placeholder: Text("Loading..."),
+//                        image: { Image(uiImage: UIImage(data: $0)!) }
+//                    )
+//                    .frame(width: 50, height: 50)
+//                }
+//            }
+//            .buttonStyle(RoundButtonStyle())
+//            
+//            Text(title)
+//                .foregroundStyle(.white)
+//        }
+//        .frame(maxWidth: .infinity, alignment: .leading) // Ensure HStack takes full width for alignment
+//    }
+//}
 
 
 struct RoundButtonStyle: ButtonStyle {

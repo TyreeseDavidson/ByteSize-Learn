@@ -32,7 +32,7 @@ struct PromptGenerator {
                 case .ShortAnswer:
                     return "Short Answer (\(status)): \(card.title): \(card.description)"
                 case .LongAnswer:
-                    return "Long Answer (Coding | \(status)): \(card.title): \(card.description)"
+                    return "Long Answer (\(status)): \(card.title): \(card.description)"
                 case .Text:
                     return "Text: \(card.title)"
                 }
@@ -48,18 +48,25 @@ struct PromptGenerator {
             **Previous Questions Asked:**
             \(formattedPreviousQuestions)
             
-            **Instruction:** Ensure that the new question does not repeat any of the previous questions listed above.
+            **Instructions:**
+                - **Avoid Repetition**: Do not repeat any of the previous questions listed above.
+                - **Rotate Question Types**: Ensure a good mix of True/False, Multiple Choice, Short Answer, and Long Answer questions to keep the user engaged. Avoid consecutive questions of the same type.
+                - **Leverage Incorrect Responses**: If a concept has been answered incorrectly multiple times, ask a similar question at an easier level.
+                - **Introduce New Concepts**: If the user has correctly answered several questions, introduce slightly more advanced or new topics.
+                - **Handle Case Sensitivity**: Use **Long Answer** instead of Short Answer for questions where multiple valid answers might exist, especially in coding or subjective topics.
+                - **Edge Case Handling**: If insufficient data is available, start with True/False or Multiple Choice questions to gauge the user’s level.
+                - If the user has many incorrect answers, provide simpler questions to build confidence.
+                - If the user is performing well, offer more challenging questions to help them grow.
             
-            Choose one of the following card types based on the user's performance, keep in mind what previous questions they got wrong or right and what they might need more practice on:
-            
-            1. **True/False**: Provide a statement that the user can verify as true or false.
-            2. **Multiple Choice**: Provide a question with four possible answers, indicating the index of the correct answer.
-            3. **Short Answer**: Provide a question that requires a brief textual response.
-            4. **Long Answer (Coding Only)**: Provide a coding problem similar to LeetCode, including two example test cases that the user's solution should pass.
-            
-            Ensure the difficulty of the question is appropriate based on the user's performance: if they have more incorrect answers, provide an easier question; if they have more correct answers, you may provide a more challenging question.
+            Choose the appropriate card type based on the following:
+                1. **True/False**: For simple statements the user can verify as true or false.
+                2. **Multiple Choice**: For questions with four possible answers, indicating the correct answer’s index.
+                3. **Short Answer**: Use only for precise, case-sensitive responses. Avoid this if multiple correct answers could exist.
+                4. **Long Answer**: Use for coding problems or open-ended questions. In coding courses, create a LeetCode-style problem with two test cases the user's solution should pass. Adjust complexity based on the user's performance.
             
             In addition to the question and answer, provide an **explanation** of the correct answer, helping the user understand the logic or concept behind it.
+            
+            **DO NOT DO THE SAME TYPE OF QUESTION MORE THEN 3 TIMES IN A ROW, THE PREVIOUS QUESTIONS ARE IN ORDER**
             
             Provide the information in the following JSON format, filling in only the relevant fields based on the card type:
             
@@ -97,7 +104,7 @@ struct PromptGenerator {
                 }
                 ```
             
-            - **Long Answer (Coding) Card**:
+            - **Long Answer** (TESTCASE ONLY FOR CODING PROBLEMS DON'T INCLUDE IT FOR REGULAR PROBLEMS) Card**:
                 ```json
                 {
                     "type": "LongAnswer",
@@ -123,7 +130,7 @@ struct PromptGenerator {
         }.joined(separator: "\n")
         
         return """
-            You are a coding problem evaluator.
+            You are a problem evaluator.
             
             Evaluate the following response for correctness.
             
@@ -139,7 +146,7 @@ struct PromptGenerator {
             **Problem Explanation**:
             \(explanation)
             
-            Determine whether the user's answer is correct based on the problem and example test cases.
+            Determine whether the user's answer is correct based on the problem and example test cases (if its a coding question).
             Respond with **only one word**: "true" if the answer is correct or "false" if it is incorrect.
             Avoid any additional commentary or formatting beyond the single word response.
             """

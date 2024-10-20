@@ -1,10 +1,3 @@
-//
-//  HomePageView.swift
-//  ByteSize-Learn
-//
-//  Created by Eli Peter on 10/19/24.
-//
-
 import SwiftUI
 
 struct HomePageView: View {
@@ -13,84 +6,156 @@ struct HomePageView: View {
     @State private var showDropdown = false
 
     var body: some View {
-        VStack {
-            Text("What course will you be learning from today?")
-                .font(.title)
-                .multilineTextAlignment(.center)
-                .padding(.top, 60)
-                .padding(.horizontal, 16)
+        ZStack {
+            // Vibrant gradient background
+            LinearGradient(
+                gradient: Gradient(colors: [Color.indigo.opacity(0.6), Color.cyan.opacity(0.4)]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .edgesIgnoringSafeArea(.all)
 
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
-                ForEach(courses, id: \.id) { course in
-                    Button(action: {
-                        print("\(course.name) selected")
-                        print("\(course.cards)")
-                        coordinator.push(.learning(course: course))
-                    }) {
-                        Text(course.name)
-                            .multilineTextAlignment(.center)
-                            .padding()
-                            .frame(maxWidth: .infinity, minHeight: 120)
-                            .background(Color.white)
-                            .cornerRadius(15)
-                            .shadow(radius: 5)
-                    }
-                }
-            }
-            .padding(.horizontal, 16)
+            VStack(spacing: 40) {
+                // Title with modern typography
+                TypingTextView(text: "Learn Something New Today!")
+                    .font(.system(size: 34, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 80)
 
-            Spacer()
-        }
-        .onAppear {
-            loadCourses()
-        }
-        .navigationBarBackButtonHidden(true)
-        .overlay(
-            ZStack {
-                // Semi-transparent overlay
-                if showDropdown {
-                    Color.black.opacity(0.8)
-                        .ignoresSafeArea()
-                        .onTapGesture {
-                            withAnimation {
-                                showDropdown = false
+                // Scrollable list of full-width cards
+                ScrollView {
+                    VStack(spacing: 16) {
+                        ForEach(courses, id: \.id) { course in
+                            CourseCardView(course: course) {
+                                coordinator.push(.learning(course: course))
                             }
                         }
-                }
-                
-                // Main button and dropdown menu aligned to the top leading
-                VStack(alignment: .leading, spacing: 10) {
-                    Button(action: {
-                        withAnimation {
-                            showDropdown.toggle()
-                        }
-                    }) {
-                        Image(systemName: showDropdown ? "xmark" : "line.3.horizontal")
-                            .rotationEffect(.degrees(showDropdown ? 90 : 0))
                     }
-                    .buttonStyle(RoundButtonStyle(foregroundColor: .black, backgroundColor: .white))
-                    
-                    if showDropdown {
-                        // Dropdown buttons
-                        DropdownButton(title: "About", icon: "questionmark.circle.fill") {
-                            showDropdown.toggle()
-                            coordinator.push(.about)
-                        }
-                        DropdownButton(title: "Settings", icon: "gear") {
-                            showDropdown.toggle()
-                            coordinator.push(.settings)
-                        }
-                    }
+                    .padding(.horizontal, 16)
                 }
-                .padding(.top, 10) // Adjust this value as needed
-                .padding(.leading, 16) // Adjust this value as needed
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading) // Ensure the VStack aligns to the top leading
+
+                Spacer()
             }
-        )
-        
+            .onAppear { loadCourses() }
+            .navigationBarHidden(true)
+
+            DropdownMenu(showDropdown: $showDropdown, coordinator: coordinator)
+        }
     }
 
     private func loadCourses() {
         courses = CourseCache.shared.loadCourses()
+    }
+}
+
+// MARK: - CourseCardView with Clean and Full-Width Design
+struct CourseCardView: View {
+    let course: Course
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            VStack {
+                // Gradient text for course name
+                Text(course.name)
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .foregroundStyle(
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color.purple, Color.blue]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .multilineTextAlignment(.center)
+                    .padding(.vertical, 20)
+            }
+            .frame(maxWidth: .infinity)
+            .background(Color.white)
+            .cornerRadius(16)
+            .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
+            .padding(.horizontal, 8)
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+}
+
+// MARK: - Dropdown Menu Component
+struct DropdownMenu: View {
+    @Binding var showDropdown: Bool
+    var coordinator: Coordinator
+
+    var body: some View {
+        VStack {
+            Button(action: toggleDropdown) {
+                Image(systemName: showDropdown ? "xmark.circle.fill" : "line.3.horizontal.circle.fill")
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .foregroundColor(.white)
+                    .padding()
+            }
+            .buttonStyle(PlainButtonStyle())
+
+            if showDropdown {
+                VStack(alignment: .leading, spacing: 20) {
+                    DropdownButton(title: "About", icon: "info.circle", showDropdown: $showDropdown) {
+                        coordinator.push(.about)
+                    }
+                    DropdownButton(title: "Settings", icon: "gearshape.fill", showDropdown: $showDropdown) {
+                        coordinator.push(.settings)
+                    }
+                }
+                .transition(.move(edge: .top).combined(with: .opacity))
+                .padding(.leading, 16)
+                .padding(.top, 60)
+            }
+
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(
+            showDropdown ? Color.black.opacity(0.4).ignoresSafeArea().onTapGesture {
+                withAnimation { showDropdown = false }
+            } : nil
+        )
+    }
+
+    private func toggleDropdown() {
+        withAnimation(.easeInOut) { showDropdown.toggle() }
+        if showDropdown { UIImpactFeedbackGenerator(style: .medium).impactOccurred() }
+    }
+}
+
+// MARK: - DropdownButton Component
+struct DropdownButton: View {
+    var title: String
+    var icon: String?
+    @Binding var showDropdown: Bool
+    var action: () -> Void
+
+    var body: some View {
+        HStack {
+            if let icon = icon {
+                Image(systemName: icon)
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.white)
+            }
+            Text(title)
+                .font(.system(size: 18, weight: .medium))
+                .foregroundColor(.white)
+                .padding(.leading, 8)
+
+            Spacer()
+        }
+        .padding()
+        .background(Color.white.opacity(0.25))
+        .cornerRadius(12)
+        .onTapGesture {
+            action()
+            withAnimation { showDropdown = false }
+        }
+        .scaleEffect(showDropdown ? 1.05 : 1)
+        .animation(.spring(response: 0.4, dampingFraction: 0.5, blendDuration: 0))
     }
 }

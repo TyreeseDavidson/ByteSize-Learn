@@ -33,7 +33,7 @@ struct LongAnswerView: View {
                     await validateAnswer()
                 }
             }) {
-                Text("Run Code")
+                Text("Submit")
                     .foregroundColor(.white)
                     .padding()
                     .frame(maxWidth: .infinity)

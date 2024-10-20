@@ -29,7 +29,7 @@ struct CardView: View {
                 .font(.subheadline)
                 .foregroundColor(.white)
             
-            if card.type == CardType.LongAnswer {
+            if card.type == CardType.LongAnswer && card.testCases != nil {
                 ForEach(card.testCases!, id: \.input) { testCase in
                     Text("Input: \(testCase.input) → Output: \(testCase.output)")
                         .foregroundColor(.white)
@@ -109,7 +109,7 @@ struct CardView: View {
             LongAnswerView(
                 title: card.title,
                 description: card.description,
-                testCases: card.testCases!,
+                testCases: card.testCases ?? [CardModel.TestCase(input: "N/A", output: "N/A")],
                 explanation: card.explanation!,
                 userAnswer: $userAnswer,
                 showFeedback: $showFeedback,
