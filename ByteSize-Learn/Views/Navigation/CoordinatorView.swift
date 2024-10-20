@@ -8,29 +8,22 @@
 import SwiftUI
 
 struct CoordinatorView: View {
-    // No need to edit this
-    
     @StateObject private var coordinator = Coordinator()
-    
+    @AppStorage("isFirstTimeLogin") private var isFirstTimeLogin = true
     
     var body: some View {
         NavigationStack(path: $coordinator.path) {
-            coordinator.build(page: .home) // Sets home as root
-                .navigationDestination(for: Page.self) { page in
-                    coordinator.build(page: page)
+            Group {
+                if isFirstTimeLogin {
+                    coordinator.build(page: .onboarding)
+                } else {
+                    coordinator.build(page: .home)
                 }
-                .sheet(item: $coordinator.sheet) { sheet in
-                    coordinator.build(sheet: sheet)
-                }
-                .fullScreenCover(item: $coordinator.fullScreenCover) { fullScreenCover in
-                    coordinator.build(fullScreenCover: fullScreenCover)
-                }
+            }
+            .navigationDestination(for: Page.self) { page in
+                coordinator.build(page: page)
+            }
         }
         .environmentObject(coordinator)
-    
     }
-}
-
-#Preview {
-    CoordinatorView()
 }

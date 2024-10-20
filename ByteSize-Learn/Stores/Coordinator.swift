@@ -73,7 +73,14 @@ class Coordinator: ObservableObject {
     func popToRoot() {
         path.removeLast(path.count)
     }
-
+    
+    func navigateToHome() {
+            DispatchQueue.main.async {
+                self.path = NavigationPath()
+                self.path.append(Page.home)
+            }
+    }
+    
     func dismissSheet() {
         self.sheet = nil
     }
