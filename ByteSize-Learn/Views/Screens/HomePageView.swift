@@ -114,7 +114,7 @@ struct DropdownMenu: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(
-            showDropdown ? Color.black.opacity(0.4).ignoresSafeArea().onTapGesture {
+            showDropdown ? Color.black.opacity(0.6).ignoresSafeArea().onTapGesture {
                 withAnimation { showDropdown = false }
             } : nil
         )
@@ -134,28 +134,32 @@ struct DropdownButton: View {
     var action: () -> Void
 
     var body: some View {
-        HStack {
-            if let icon = icon {
-                Image(systemName: icon)
-                    .resizable()
-                    .frame(width: 24, height: 24)
+        GeometryReader { geometry in
+            HStack {
+                if let icon = icon {
+                    Image(systemName: icon)
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(.white)
+                }
+                Text(title)
+                    .font(.system(size: 18, weight: .medium))
                     .foregroundColor(.white)
-            }
-            Text(title)
-                .font(.system(size: 18, weight: .medium))
-                .foregroundColor(.white)
-                .padding(.leading, 8)
+                    .padding(.leading, 8)
 
-            Spacer()
+                Spacer()
+            }
+            .padding()
+            .background(Color.white.opacity(0.3))
+            .cornerRadius(12)
+            .frame(maxWidth: geometry.size.width - 32)  // Ensures the button stays within the screen bounds
+            .onTapGesture {
+                action()
+                withAnimation { showDropdown = false }
+            }
+            .scaleEffect(showDropdown ? 1.05 : 1)
+            .animation(.spring(response: 0.4, dampingFraction: 0.5, blendDuration: 0))
         }
-        .padding()
-        .background(Color.white.opacity(0.25))
-        .cornerRadius(12)
-        .onTapGesture {
-            action()
-            withAnimation { showDropdown = false }
-        }
-        .scaleEffect(showDropdown ? 1.05 : 1)
-        .animation(.spring(response: 0.4, dampingFraction: 0.5, blendDuration: 0))
+        .frame(height: 50)  // Set a fixed height for the button
     }
 }
