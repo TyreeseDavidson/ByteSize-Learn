@@ -17,76 +17,94 @@ struct OnboardingView: View {
     @State private var showErrorAlert = false
     @State private var errorMessage = ""
     
+    // Loading state
+    @State private var isLoading = false
+    
     // Total number of onboarding steps
     private let totalTabs = 4
     
     var body: some View {
-        VStack {
-            TabView(selection: $selectedTab) {
-                welcomeView
-                    .tag(0)
+        ZStack {
+            VStack {
+                TabView(selection: $selectedTab) {
+                    welcomeView
+                        .tag(0)
+                    
+                    infoView
+                        .tag(1)
+                    
+                    notificationView
+                        .tag(2)
+                    
+                    courseSelectionView
+                        .tag(3)
+                }
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+                .animation(.easeInOut, value: selectedTab)
                 
-                infoView
-                    .tag(1)
-                
-                notificationView
-                    .tag(2)
-                
-                courseSelectionView
-                    .tag(3)
+                // Uncomment and use navigation controls if needed
+                /*
+                HStack {
+                    if selectedTab > 0 {
+                        Button(action: {
+                            withAnimation {
+                                selectedTab -= 1
+                            }
+                        }) {
+                            Text("Back")
+                                .fontWeight(.semibold)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.gray.opacity(0.2))
+                                .cornerRadius(10)
+                        }
+                    } else {
+                        // Placeholder to align the "Next" button
+                        Spacer()
+                            .frame(maxWidth: .infinity)
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: nextStep) {
+                        Text(selectedTab == totalTabs - 1 ? "Finish" : "Next")
+                            .fontWeight(.semibold)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                }
+                .padding([.horizontal, .bottom])
+                */
             }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-            .animation(.easeInOut, value: selectedTab)
-            
-//            // Navigation Controls
-//            HStack {
-//                if selectedTab > 0 {
-//                    Button(action: {
-//                        withAnimation {
-//                            selectedTab -= 1
-//                        }
-//                    }) {
-//                        Text("Back")
-//                            .fontWeight(.semibold)
-//                            .padding()
-//                            .frame(maxWidth: .infinity)
-//                            .background(Color.gray.opacity(0.2))
-//                            .cornerRadius(10)
-//                    }
-//                } else {
-//                    // Placeholder to align the "Next" button
-//                    Spacer()
-//                        .frame(maxWidth: .infinity)
-//                }
-//                
-//                Spacer()
-//                
-//                Button(action: nextStep) {
-//                    Text(selectedTab == totalTabs - 1 ? "Finish" : "Next")
-//                        .fontWeight(.semibold)
-//                        .padding()
-//                        .frame(maxWidth: .infinity)
-//                        .background(Color.blue)
-//                        .foregroundColor(.white)
-//                        .cornerRadius(10)
-//                }
-//            }
-//            .padding([.horizontal, .bottom])
-        }
-        .alert(isPresented: $showErrorAlert) {
-            Alert(title: Text("Error"),
-                  message: Text(errorMessage),
-                  dismissButton: .default(Text("OK")))
-        }
-        .navigationBarTitle("Welcome to ByteSize-Learn", displayMode: .inline)
-        .background(
-            LinearGradient(
-                gradient: Gradient(colors: [Color.purple.opacity(0.3), Color.blue.opacity(0.3)]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
+            .alert(isPresented: $showErrorAlert) {
+                Alert(title: Text("Error"),
+                      message: Text(errorMessage),
+                      dismissButton: .default(Text("OK")))
+            }
+            .navigationBarTitle("Welcome to ByteSize-Learn", displayMode: .inline)
+            .background(
+                LinearGradient(
+                    gradient: Gradient(colors: [Color.purple.opacity(0.3), Color.blue.opacity(0.3)]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .edgesIgnoringSafeArea(.all)
             )
-            .edgesIgnoringSafeArea(.all)
-        )
+            // Overlay for loading indicator
+            if isLoading {
+                Color.black.opacity(0.4)
+                    .edgesIgnoringSafeArea(.all)
+                ProgressView("Loading...")
+                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.gray.opacity(0.7))
+                    .cornerRadius(10)
+            }
+        }
     }
     
     // MARK: - Tab Views
@@ -191,31 +209,6 @@ struct OnboardingView: View {
             }
             .onDelete(perform: courseData.removeCourse)
             
-//            List {
-//                Section(header: Text("Manage Courses")) {
-//                    ForEach(courseData.courses, id: \.id) { course in
-//                        VStack(alignment: .leading) {
-//                            Text(course.name)
-//                                .font(.headline)
-//                            Text(course.description)
-//                                .font(.subheadline)
-//                                .foregroundColor(.gray)
-//                        }
-//                    }
-//                    .onDelete(perform: courseData.removeCourse)
-//
-//                    Button(action: {
-//                        isAddingCourse = true
-//                    }) {
-//                        HStack {
-//                            Image(systemName: "plus.circle.fill")
-//                            Text("Add New Course")
-//                        }
-//                    }
-//                }
-//            }
-
-            
             Button(action: {
                 isAddingCourse = true
             }) {
@@ -234,6 +227,10 @@ struct OnboardingView: View {
             .sheet(isPresented: $isAddingCourse) {
                 AddCourseView { newCourse in
                     Task {
+                        // Start loading
+                        await MainActor.run {
+                            isLoading = true
+                        }
                         do {
                             let fetchedCards = try await fetchCardsForCourse(course: newCourse)
                             let updatedCourse = Course(
@@ -241,10 +238,19 @@ struct OnboardingView: View {
                                 description: newCourse.description,
                                 cards: fetchedCards
                             )
-                            courseData.addCourse(updatedCourse)
+                            await MainActor.run {
+                                courseData.addCourse(updatedCourse)
+                            }
                         } catch {
                             print("Failed to fetch cards: \(error)")
-                            // Optionally, handle the error (e.g., show an alert to the user)
+                            await MainActor.run {
+                                errorMessage = "Failed to fetch cards for the course. Please try again."
+                                showErrorAlert = true
+                            }
+                        }
+                        // End loading
+                        await MainActor.run {
+                            isLoading = false
                         }
                     }
                 }

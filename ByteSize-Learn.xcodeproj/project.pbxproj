@@ -27,6 +27,7 @@
 		2D6317952CC499E00043325E /* CourseCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6317942CC499E00043325E /* CourseCache.swift */; };
 		2D6317972CC49C7C0043325E /* CourseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6317962CC49C7C0043325E /* CourseData.swift */; };
 		2D6317992CC4A1A00043325E /* TypingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6317982CC4A1A00043325E /* TypingTextView.swift */; };
+		2D63179B2CC4AA2B0043325E /* CardGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D63179A2CC4AA2B0043325E /* CardGenerator.swift */; };
 		2D8B1EEF2CC417C8001C30D5 /* ByteSize_LearnApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B1EEE2CC417C8001C30D5 /* ByteSize_LearnApp.swift */; };
 		2D8B1EF32CC417C9001C30D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D8B1EF22CC417C9001C30D5 /* Assets.xcassets */; };
 		2D8B1EF62CC417C9001C30D5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D8B1EF52CC417C9001C30D5 /* Preview Assets.xcassets */; };
@@ -92,6 +93,7 @@
 		2D6317942CC499E00043325E /* CourseCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseCache.swift; sourceTree = "<group>"; };
 		2D6317962CC49C7C0043325E /* CourseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseData.swift; sourceTree = "<group>"; };
 		2D6317982CC4A1A00043325E /* TypingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingTextView.swift; sourceTree = "<group>"; };
+		2D63179A2CC4AA2B0043325E /* CardGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardGenerator.swift; sourceTree = "<group>"; };
 		2D8B1EEB2CC417C8001C30D5 /* ByteSize-Learn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ByteSize-Learn.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D8B1EEE2CC417C8001C30D5 /* ByteSize_LearnApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteSize_LearnApp.swift; sourceTree = "<group>"; };
 		2D8B1EF22CC417C9001C30D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				2DA10A1E2CC419A7007BE130 /* Coordinator.swift */,
+				2D63179A2CC4AA2B0043325E /* CardGenerator.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				2D63178E2CC481A90043325E /* Secrets.swift in Sources */,
 				2D6317682CC437E50043325E /* LearningView.swift in Sources */,
 				2DA10A242CC41ADC007BE130 /* UIElements.swift in Sources */,
+				2D63179B2CC4AA2B0043325E /* CardGenerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,37 +19,29 @@ struct LearningView: View {
     @State private var popupText: String = ""
     @State private var popupColor: Color = .green
     
-    // Loading State
-    @State private var isLoading: Bool = false
-    
     // User Performance Metrics
     @State private var correctCount: Int = 0
     @State private var incorrectCount: Int = 0
+    
+    // Card Generator
+    @StateObject private var cardGenerator = CardGenerator()
     
     var body: some View {
         ZStack {
             Color(UIColor.systemBackground)
                 .edgesIgnoringSafeArea(.all)
             
-            if isLoading {
-                ProgressView("Generating Card...")
-                    .progressViewStyle(CircularProgressViewStyle(tint: .blue))
-                    .scaleEffect(1.5)
-            } else {
-                // Card Stack
-                CardStackView(cards: cards, onSwipeUp: {
-                    // Handle swipe up: remove top card and load next
-                    if !cards.isEmpty {
-                        setLastCardCorrect(isCorrect: 3)
-                        cards.removeLast()
-                        Task {
-                            await loadNextCard()
-                        }
-                    }
-                }, onAnswer: { isCorrect, explanation in
-                    handleAnswer(isCorrect: isCorrect, explanation: explanation)
-                })
-            }
+            // Card Stack
+            CardStackView(cards: cards, onSwipeUp: {
+                // Handle swipe up: remove top card and load next
+                if !cards.isEmpty {
+                    setLastCardCorrect(isCorrect: 3)
+                    cards.removeLast()
+                    loadNextCard()
+                }
+            }, onAnswer: { isCorrect, explanation in
+                handleAnswer(isCorrect: isCorrect, explanation: explanation)
+            })
             
             // Popup Overlay
             if showPopup {
@@ -76,32 +68,30 @@ struct LearningView: View {
 
     // Function to load the initial cards based on the course
     private func loadInitialCards() async {
-        isLoading = true
         // Assume course.cards already has some initial cards
         self.cards = course.cards
         self.allPreviousCards = course.cards
-        isLoading = false
     }
 
-    // Function to load the next card via API
-    private func loadNextCard() async {
-//        let prompt = PromptGenerator.generatePrompt(courseTitle: course.name, courseDescription: course.description, correctCount: correctCount, incorrectCount: incorrectCount)
-        
-        do {
-            isLoading = true
-            let newCard = try await APIService.shared.generateCard(courseTitle: course.name, courseDescription: course.description, correctCount: correctCount, incorrectCount: incorrectCount, previousQuestions: allPreviousCards)
-            // Append to the bottom of the deck
-            DispatchQueue.main.async {
-                self.cards.insert(newCard, at: 0)
-                self.allPreviousCards.append(newCard)
-                isLoading = false
-            }
-        } catch {
-            print("Error generating card: \(error)")
-            isLoading = false
-            // Optionally, show an error popup
-            Task {
-                await showError(message: "Failed to generate a new card. Please try again.")
+    // Function to load the next card via the CardGenerator
+    private func loadNextCard() {
+        cardGenerator.enqueue(
+            course: course,
+            correctCount: correctCount,
+            incorrectCount: incorrectCount,
+            previousQuestions: allPreviousCards
+        ) { result in
+            switch result {
+            case .success(let newCard):
+                DispatchQueue.main.async {
+                    self.cards.insert(newCard, at: 0)
+                    self.allPreviousCards.append(newCard)
+                }
+            case .failure(let error):
+                print("Error generating card: \(error)")
+                Task {
+                    await showError(message: "Failed to generate a new card. Please try again.")
+                }
             }
         }
     }
@@ -138,9 +128,7 @@ struct LearningView: View {
             
             if isCorrect {
                 // Proceed to next card
-                Task {
-                    await loadNextCard()
-                }
+                loadNextCard()
             } else if let explanation = explanation {
                 // Insert explanation card at top
                 let explanationCard = CardModel(
@@ -178,4 +166,3 @@ struct LearningView: View {
         }
     }
 }
-
