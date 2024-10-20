@@ -11,46 +11,55 @@ struct SettingsView: View {
     @EnvironmentObject private var courseData: CourseData
     @EnvironmentObject private var coordinator: Coordinator
     @State private var isAddingCourse = false
+    @State private var isLoading = false // Track loading state
 
     var body: some View {
         VStack {
-            List {
-                Section(header: Text("Manage Courses")) {
-                    ForEach(courseData.courses, id: \.id) { course in
-                        VStack(alignment: .leading) {
-                            Text(course.name)
-                                .font(.headline)
-                            Text(course.description)
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
+            if isLoading {
+                LoadingView(message: "Generating course cards...")
+            } else {
+                // Course Management Section
+                List {
+                    Section(header: Text("Manage Courses")
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.primary)
+                    ) {
+                        ForEach(courseData.courses, id: \.id) { course in
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(course.name)
+                                    .font(.headline)
+                                Text(course.description)
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
                         }
-                    }
-                    .onDelete(perform: courseData.removeCourse)
+                        .onDelete(perform: courseData.removeCourse)
 
-                    Button(action: {
-                        isAddingCourse = true
-                    }) {
-                        HStack {
-                            Image(systemName: "plus.circle.fill")
-                            Text("Add New Course")
+                        // Add New Course Button
+                        Button(action: { isAddingCourse = true }) {
+                            Label("Add New Course", systemImage: "plus.circle.fill")
+                                .font(.body)
+                                .foregroundColor(.blue)
                         }
                     }
                 }
-            }
+                .listStyle(InsetGroupedListStyle())
 
-            Button("Save Changes") {
-                courseData.saveCourses()
-                coordinator.navigateToHome()
+                // Save Changes Button with Gradient
+                GradientButton(title: "Save Changes") {
+                    courseData.saveCourses()
+                    coordinator.navigateToHome()
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
             }
-            .padding()
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(10)
         }
         .navigationTitle("Settings")
         .navigationBarBackButtonHidden(true)
         .sheet(isPresented: $isAddingCourse) {
             AddCourseView { newCourse in
+                isLoading = true // Start loading
                 Task {
                     do {
                         let fetchedCards = try await fetchCardsForCourse(course: newCourse)
@@ -62,36 +71,96 @@ struct SettingsView: View {
                         courseData.addCourse(updatedCourse)
                     } catch {
                         print("Failed to fetch cards: \(error)")
-                        // Optionally, handle the error (e.g., show an alert to the user)
                     }
+                    isLoading = false // Stop loading
                 }
             }
         }
-        .onAppear {
-            courseData.loadCourses()
-        }
+        .onAppear { courseData.loadCourses() }
     }
 
+    // Helper Function for Fetching Cards
     private func fetchCardsForCourse(course: Course) async throws -> [CardModel] {
         var allFetchedCards: [CardModel] = []
 
         try await withThrowingTaskGroup(of: CardModel.self) { group in
             for _ in 1...5 {
-                allFetchedCards.append (try await APIService.shared.generateCard(
+                let card = try await APIService.shared.generateCard(
                     courseTitle: course.name,
                     courseDescription: course.description,
                     correctCount: 0,
                     incorrectCount: 0,
                     previousQuestions: allFetchedCards
                 )
-                                        )
+                allFetchedCards.append(card)
             }
-            
-//            for try await card in group {
-//                allFetchedCards.append(card)
-//            }
         }
 
         return allFetchedCards
     }
+}
+
+// Gradient Button Component
+struct GradientButton: View {
+    let title: String
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Text(title)
+                .fontWeight(.semibold)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(
+                    LinearGradient(
+                        gradient: Gradient(colors: [.blue, .purple]),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .foregroundColor(.white)
+                .cornerRadius(12)
+        }
+    }
+}
+
+// Modern Loading View
+struct LoadingView: View {
+    let message: String
+
+    var body: some View {
+        VStack(spacing: 16) {
+            // Gradient ProgressView
+            LinearGradient(
+                gradient: Gradient(colors: [.blue, .purple]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .mask(
+                ProgressView()
+                    .scaleEffect(1.5)
+            )
+            .frame(width: 50, height: 50) // Fix size to ensure mask aligns properly
+
+            // Gradient Text
+            LinearGradient(
+                gradient: Gradient(colors: [.blue, .purple]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .mask(
+                Text(message)
+                    .font(.body)
+                    .fontWeight(.semibold)
+            )
+            .frame(maxWidth: .infinity)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all))
+    }
+}
+#Preview {
+    SettingsView()
+        .environmentObject(CourseData())
+        .environmentObject(Coordinator())
 }
