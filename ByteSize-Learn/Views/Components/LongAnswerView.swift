@@ -34,10 +34,11 @@ struct LongAnswerView: View {
                 }
             }) {
                 Text("Submit")
-                    .foregroundColor(.white)
-                    .padding()
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
-                    .background(Color.blue) // Updated color
+                    .padding()
+                    .background(Color.white)
                     .cornerRadius(10)
             }
             .disabled(userAnswer.isEmpty)

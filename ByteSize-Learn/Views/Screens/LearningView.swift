@@ -54,13 +54,20 @@ struct LearningView: View {
                 await loadInitialCards()
             }
         }
-        .navigationTitle("Learning")
+        .navigationBarTitleDisplayMode(.inline) // Inline style for custom title
+                .toolbar {
+                    
+                }
         .navigationBarBackButtonHidden(true) // Hide the default back button
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 CloseButtonView {
                     coordinator.navigateToHome()
                 }
+            }
+            ToolbarItem(placement: .principal) {
+                GradientText(text: course.name) // Custom gradient text title
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
             }
         }
         .navigationBarTitleDisplayMode(.inline) // Optional: makes the title look cleaner
@@ -109,7 +116,7 @@ struct LearningView: View {
         setLastCardCorrect(isCorrect: isCorrect ? 1 : -1)
         
         // Update popup state
-        popupText = isCorrect ? "Correct ✅" : "Incorrect ❌"
+        popupText = isCorrect ? "Correct" : "Incorrect"
         popupColor = isCorrect ? .green : .red
         withAnimation {
             showPopup = true
@@ -163,6 +170,34 @@ struct LearningView: View {
     private func setLastCardCorrect(isCorrect: Int8) {
         if let lastIndex = cards.indices.last {
             cards[lastIndex].isCorrect = isCorrect
+        }
+    }
+    
+    struct GradientText: View {
+        let text: String
+
+        var body: some View {
+            Text(text)
+                .foregroundStyle(
+                    LinearGradient(
+                        gradient: Gradient(colors: [Color.purple, Color.blue]),
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+        }
+    }
+    
+    struct CloseButtonView: View {
+        let action: () -> Void
+
+        var body: some View {
+            Button(action: action) {
+                GradientText(text: "×") // Using a custom thicker "X"
+                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .padding(.horizontal, 4) // Optional padding for spacing
+            }
+            .accessibilityLabel("Close")
         }
     }
 }

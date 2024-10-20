@@ -1,4 +1,3 @@
-//
 //  CardView.swift
 //  ByteSize-Learn
 //
@@ -18,21 +17,25 @@ struct CardView: View {
     @State private var isCorrect: Bool = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            // Card Title
+        VStack(alignment: .center, spacing: 20) {
+            // Card Title - Larger Font and Centered
             Text(card.title)
-                .font(.headline)
+                .font(.largeTitle)
+                .fontWeight(.bold)
                 .foregroundColor(.white)
-            
+                .multilineTextAlignment(.center)
+
             // Card Description
             Text(card.description)
                 .font(.subheadline)
                 .foregroundColor(.white)
+                .multilineTextAlignment(.center)
             
             if card.type == CardType.LongAnswer && card.testCases != nil {
                 ForEach(card.testCases!, id: \.input) { testCase in
                     Text("Input: \(testCase.input) → Output: \(testCase.output)")
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
                 }
             }
             

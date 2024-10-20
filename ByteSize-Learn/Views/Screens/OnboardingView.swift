@@ -167,11 +167,17 @@ struct OnboardingView: View {
         Button(action: {
             coordinator.navigateToHome()
         }) {
-            Text("Continue")
+            Text("Continue!")
                 .font(.headline)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color.green)
+                .background(
+                    LinearGradient(
+                        gradient: Gradient(colors: [Color.purple, Color.blue]),
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
                 .foregroundColor(.white)
                 .cornerRadius(10)
         }
