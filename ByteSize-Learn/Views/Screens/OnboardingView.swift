@@ -148,12 +148,19 @@ struct OnboardingView: View {
                 Image(systemName: "plus.circle.fill")
                 Text("Add Your First Courses")
                     .font(.headline)
+                    .foregroundStyle(
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color.blue, Color.purple]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    ) // Apply gradient to text
             }
             .padding()
             .frame(maxWidth: .infinity)
-            .background(Color.blue)
-            .foregroundColor(.white)
+            .background(Color.white) // White background
             .cornerRadius(10)
+//            .shadow(radius: 2) // Optional: Adds subtle shadow
         }
         .padding(.horizontal)
         .sheet(isPresented: $isAddingCourse) {
