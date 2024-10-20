@@ -12,27 +12,44 @@ struct LearningView: View {
     let course: Course
 
     @State private var cards: [CardModel] = []
+    @State private var allPreviousCards: [CardModel] = []
     
     // Popup State
     @State private var showPopup: Bool = false
     @State private var popupText: String = ""
     @State private var popupColor: Color = .green
     
+    // Loading State
+    @State private var isLoading: Bool = false
+    
+    // User Performance Metrics
+    @State private var correctCount: Int = 0
+    @State private var incorrectCount: Int = 0
+    
     var body: some View {
         ZStack {
             Color(UIColor.systemBackground)
                 .edgesIgnoringSafeArea(.all)
             
-            // Card Stack
-            CardStackView(cards: cards, onSwipeUp: {
-                // Handle swipe up: remove top card and load next
-                if !cards.isEmpty {
-                    cards.removeLast()
-                    loadNextCard()
-                }
-            }, onAnswer: { isCorrect, explanation in
-                handleAnswer(isCorrect: isCorrect, explanation: explanation)
-            })
+            if isLoading {
+                ProgressView("Generating Card...")
+                    .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                    .scaleEffect(1.5)
+            } else {
+                // Card Stack
+                CardStackView(cards: cards, onSwipeUp: {
+                    // Handle swipe up: remove top card and load next
+                    if !cards.isEmpty {
+                        setLastCardCorrect(isCorrect: 3)
+                        cards.removeLast()
+                        Task {
+                            await loadNextCard()
+                        }
+                    }
+                }, onAnswer: { isCorrect, explanation in
+                    handleAnswer(isCorrect: isCorrect, explanation: explanation)
+                })
+            }
             
             // Popup Overlay
             if showPopup {
@@ -41,7 +58,9 @@ struct LearningView: View {
             }
         }
         .onAppear {
-            loadInitialCards()
+            Task {
+                await loadInitialCards()
+            }
         }
         .navigationTitle("Learning")
         .navigationBarBackButtonHidden(true) // Hide the default back button
@@ -56,24 +75,49 @@ struct LearningView: View {
     }
 
     // Function to load the initial cards based on the course
-    private func loadInitialCards() {
-        // Replace this with actual content fetching logic or API call
+    private func loadInitialCards() async {
+        isLoading = true
+        // Assume course.cards already has some initial cards
         self.cards = course.cards
+        self.allPreviousCards = course.cards
+        isLoading = false
     }
 
-    // Function to load the next card
-    private func loadNextCard() {
-        // Fetch or generate the next card specific to the course
-        // Placeholder for API call to fetch new card
-        fetchNewCard { newCard in
+    // Function to load the next card via API
+    private func loadNextCard() async {
+//        let prompt = PromptGenerator.generatePrompt(courseTitle: course.name, courseDescription: course.description, correctCount: correctCount, incorrectCount: incorrectCount)
+        
+        do {
+            isLoading = true
+            let newCard = try await APIService.shared.generateCard(courseTitle: course.name, courseDescription: course.description, correctCount: correctCount, incorrectCount: incorrectCount, previousQuestions: allPreviousCards)
+            // Append to the bottom of the deck
             DispatchQueue.main.async {
-                self.cards.insert(newCard, at: 0) // Insert at front, bottom of deck
+                self.cards.insert(newCard, at: 0)
+                self.allPreviousCards.append(newCard)
+                isLoading = false
+            }
+        } catch {
+            print("Error generating card: \(error)")
+            isLoading = false
+            // Optionally, show an error popup
+            Task {
+                await showError(message: "Failed to generate a new card. Please try again.")
             }
         }
     }
     
     // Handle the answer result
     private func handleAnswer(isCorrect: Bool, explanation: String?) {
+        // Update performance metrics
+        if isCorrect {
+            correctCount += 1
+        } else {
+            incorrectCount += 1
+        }
+        
+        // Update card isCorrect
+        setLastCardCorrect(isCorrect: isCorrect ? 1 : -1)
+        
         // Update popup state
         popupText = isCorrect ? "Correct ✅" : "Incorrect ❌"
         popupColor = isCorrect ? .green : .red
@@ -94,31 +138,44 @@ struct LearningView: View {
             
             if isCorrect {
                 // Proceed to next card
-                loadNextCard()
+                Task {
+                    await loadNextCard()
+                }
             } else if let explanation = explanation {
                 // Insert explanation card at top
                 let explanationCard = CardModel(
+                    type: .Text,
                     title: "Explanation",
                     description: explanation,
-                    type: .text
+                    answer: nil,
+                    correctIndex: nil,
+                    testCases: nil
                 )
                 cards.append(explanationCard)
             }
         }
     }
     
-    // Placeholder function for API call to fetch a new card
-    private func fetchNewCard(completion: @escaping (CardModel) -> Void) {
-        // Simulate network delay
-        DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
-            // Create a dummy new card
-            let newCard = CardModel(
-                title: "New Topic",
-                description: "This is a new card fetched from the API.",
-                type: .text,
-                explanation: "Explanation for the new topic."
-            )
-            completion(newCard)
+    // Function to show error popup
+    private func showError(message: String) async {
+        popupText = message
+        popupColor = .red
+        withAnimation {
+            showPopup = true
+        }
+        
+        // Hide after 2 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            withAnimation {
+                showPopup = false
+            }
+        }
+    }
+    
+    private func setLastCardCorrect(isCorrect: Int8) {
+        if let lastIndex = cards.indices.last {
+            cards[lastIndex].isCorrect = isCorrect
         }
     }
 }
+

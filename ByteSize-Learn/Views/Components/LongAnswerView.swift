@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct LongAnswerView: View {
-    let correctAnswer: String // Expected code or description
+    let title: String
+    let description: String
+    let testCases: [CardModel.TestCase]
+    let explanation: String
     
     @Binding var userAnswer: String
     @Binding var showFeedback: Bool
@@ -26,7 +29,9 @@ struct LongAnswerView: View {
                 .cornerRadius(8)
             
             Button(action: {
-                runCode()
+                Task {
+                    await validateAnswer()
+                }
             }) {
                 Text("Run Code")
                     .foregroundColor(.white)
@@ -39,14 +44,20 @@ struct LongAnswerView: View {
         }
     }
     
-    private func runCode() {
-        // Placeholder for API call to run code
-        // Simulate correctness based on whether userAnswer contains the correctAnswer substring
-        if userAnswer.contains(correctAnswer) {
-            isCorrect = true
-        } else {
-            isCorrect = false
+    private func validateAnswer() async {
+            do {
+                isCorrect = try await APIService.shared.validateLongAnswer(
+                    title: title,
+                    description: description,
+                    testCases: testCases,
+                    userAnswer: userAnswer,
+                    explanation: explanation
+                )
+                showFeedback = true
+            } catch {
+                print("Validation failed: \(error)")
+                showFeedback = true
+                isCorrect = false
+            }
         }
-        showFeedback = true
-    }
 }

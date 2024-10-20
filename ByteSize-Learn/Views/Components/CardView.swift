@@ -29,11 +29,20 @@ struct CardView: View {
                 .font(.subheadline)
                 .foregroundColor(.white)
             
-            Divider()
-                .background(Color.white)
+            if card.type == CardType.LongAnswer {
+                ForEach(card.testCases!, id: \.input) { testCase in
+                    Text("Input: \(testCase.input) → Output: \(testCase.output)")
+                        .foregroundColor(.white)
+                }
+            }
             
-            // Dynamic Content Based on Card Type
-            content
+            if card.type != CardType.Text {
+                Divider()
+                    .background(Color.white)
+                
+                // Dynamic Content Based on Card Type
+                content
+            }
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -51,15 +60,15 @@ struct CardView: View {
     @ViewBuilder
     private var content: some View {
         switch card.type {
-        case .text:
+        case .Text:
             Text(card.description)
                 .font(.body)
                 .foregroundColor(.white)
         
-        case .multipleChoice(let options, let correctIndex):
+        case .MultipleChoice:
             MultipleChoiceView(
-                options: options,
-                correctIndex: correctIndex,
+                options: card.options!,
+                correctIndex: card.correctIndex!,
                 selectedOption: $selectedOption,
                 showFeedback: $showFeedback,
                 isCorrect: $isCorrect
@@ -70,9 +79,9 @@ struct CardView: View {
                 }
             }
         
-        case .trueFalse(let correctAnswer):
+        case .TrueFalse:
             TrueFalseView(
-                correctAnswer: correctAnswer,
+                correctAnswer: card.truefalse!,
                 selectedOption: $selectedOption,
                 showFeedback: $showFeedback,
                 isCorrect: $isCorrect
@@ -83,9 +92,9 @@ struct CardView: View {
                 }
             }
         
-        case .shortAnswer(let correctAnswer):
+        case .ShortAnswer:
             ShortAnswerView(
-                correctAnswer: correctAnswer,
+                correctAnswer: card.answer!,
                 userAnswer: $userAnswer,
                 showFeedback: $showFeedback,
                 isCorrect: $isCorrect
@@ -96,9 +105,12 @@ struct CardView: View {
                 }
             }
         
-        case .longAnswer(let correctAnswer):
+        case .LongAnswer:
             LongAnswerView(
-                correctAnswer: correctAnswer,
+                title: card.title,
+                description: card.description,
+                testCases: card.testCases!,
+                explanation: card.explanation!,
                 userAnswer: $userAnswer,
                 showFeedback: $showFeedback,
                 isCorrect: $isCorrect
@@ -111,12 +123,3 @@ struct CardView: View {
         }
     }
 }
-
-//struct CardView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let sampleCard = SampleData.sampleCourse.cards[1]
-//        CardView(card: sampleCard, onAnswer: { _, _ in })
-//            .frame(width: 300, height: 500)
-//    }
-//}
-

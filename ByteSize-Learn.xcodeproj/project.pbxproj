@@ -19,6 +19,10 @@
 		2D63177C2CC4484D0043325E /* CardStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D63177B2CC4484D0043325E /* CardStackView.swift */; };
 		2D63177E2CC4486A0043325E /* CloseButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D63177D2CC4486A0043325E /* CloseButtonView.swift */; };
 		2D6317812CC44CFB0043325E /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6317802CC44CFB0043325E /* PopupView.swift */; };
+		2D6317842CC4572B0043325E /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6317832CC4572B0043325E /* APIService.swift */; };
+		2D6317862CC458AE0043325E /* PromptGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6317852CC458AE0043325E /* PromptGenerator.swift */; };
+		2D63178A2CC480FE0043325E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D6317892CC480FE0043325E /* Secrets.plist */; };
+		2D63178E2CC481A90043325E /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D63178D2CC481A90043325E /* Secrets.swift */; };
 		2D8B1EEF2CC417C8001C30D5 /* ByteSize_LearnApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B1EEE2CC417C8001C30D5 /* ByteSize_LearnApp.swift */; };
 		2D8B1EF32CC417C9001C30D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D8B1EF22CC417C9001C30D5 /* Assets.xcassets */; };
 		2D8B1EF62CC417C9001C30D5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D8B1EF52CC417C9001C30D5 /* Preview Assets.xcassets */; };
@@ -76,6 +80,10 @@
 		2D63177B2CC4484D0043325E /* CardStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStackView.swift; sourceTree = "<group>"; };
 		2D63177D2CC4486A0043325E /* CloseButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButtonView.swift; sourceTree = "<group>"; };
 		2D6317802CC44CFB0043325E /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
+		2D6317832CC4572B0043325E /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		2D6317852CC458AE0043325E /* PromptGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptGenerator.swift; sourceTree = "<group>"; };
+		2D6317892CC480FE0043325E /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
+		2D63178D2CC481A90043325E /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Secrets.swift; path = ../../../.Trash/Secrets.swift; sourceTree = "<group>"; };
 		2D8B1EEB2CC417C8001C30D5 /* ByteSize-Learn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ByteSize-Learn.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D8B1EEE2CC417C8001C30D5 /* ByteSize_LearnApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteSize_LearnApp.swift; sourceTree = "<group>"; };
 		2D8B1EF22CC417C9001C30D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -134,7 +142,6 @@
 		2D6317692CC441470043325E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				2D6317782CC446CA0043325E /* Sample */,
 				2D63176A2CC441560043325E /* Course.swift */,
 				2D63176C2CC4417E0043325E /* Card.swift */,
 			);
@@ -164,9 +171,20 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		2D6317822CC457180043325E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2D63178D2CC481A90043325E /* Secrets.swift */,
+				2D6317832CC4572B0043325E /* APIService.swift */,
+				2D6317852CC458AE0043325E /* PromptGenerator.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		2D8B1EE22CC417C8001C30D5 = {
 			isa = PBXGroup;
 			children = (
+				2D6317892CC480FE0043325E /* Secrets.plist */,
 				2D8B1EED2CC417C8001C30D5 /* ByteSize-Learn */,
 				2D8B1EFE2CC417C9001C30D5 /* ByteSize-LearnTests */,
 				2D8B1F082CC417C9001C30D5 /* ByteSize-LearnUITests */,
@@ -187,6 +205,8 @@
 		2D8B1EED2CC417C8001C30D5 /* ByteSize-Learn */ = {
 			isa = PBXGroup;
 			children = (
+				2D6317782CC446CA0043325E /* Sample */,
+				2D6317822CC457180043325E /* Services */,
 				2D6317692CC441470043325E /* Models */,
 				2DA10A1C2CC4195F007BE130 /* Stores */,
 				2DA10A1B2CC41947007BE130 /* Views */,
@@ -346,6 +366,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					New,
+				);
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
@@ -391,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D8B1EF62CC417C9001C30D5 /* Preview Assets.xcassets in Resources */,
+				2D63178A2CC480FE0043325E /* Secrets.plist in Resources */,
 				2D8B1EF32CC417C9001C30D5 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -417,6 +441,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DA10A292CC41C25007BE130 /* AboutView.swift in Sources */,
+				2D6317842CC4572B0043325E /* APIService.swift in Sources */,
 				2D63177E2CC4486A0043325E /* CloseButtonView.swift in Sources */,
 				2D6317712CC4464C0043325E /* MultipleChoiceView.swift in Sources */,
 				2D63176B2CC441560043325E /* Course.swift in Sources */,
@@ -426,6 +451,7 @@
 				2D6317732CC446600043325E /* TrueFalseView.swift in Sources */,
 				2DA10A2F2CC41C8D007BE130 /* OnboardingView.swift in Sources */,
 				2D63177A2CC446D50043325E /* SampleData.swift in Sources */,
+				2D6317862CC458AE0043325E /* PromptGenerator.swift in Sources */,
 				2D8B1EEF2CC417C8001C30D5 /* ByteSize_LearnApp.swift in Sources */,
 				2DA10A1F2CC419A7007BE130 /* Coordinator.swift in Sources */,
 				2D63176D2CC4417E0043325E /* Card.swift in Sources */,
@@ -434,6 +460,7 @@
 				2D6317772CC446850043325E /* LongAnswerView.swift in Sources */,
 				2D6317752CC446720043325E /* ShortAnswerView.swift in Sources */,
 				2DA10A312CC41D0B007BE130 /* HomePageView.swift in Sources */,
+				2D63178E2CC481A90043325E /* Secrets.swift in Sources */,
 				2D6317682CC437E50043325E /* LearningView.swift in Sources */,
 				2DA10A242CC41ADC007BE130 /* UIElements.swift in Sources */,
 			);
